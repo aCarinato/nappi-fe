@@ -32,7 +32,7 @@ function HomePage() {
     fetchMessage();
   }, []);
 
-  return <div>{isLoading ? <div>Loading</div> : <ul>{display}</ul>}</div>;
+  return <div>{isLoading ? <div>Loading merda</div> : <ul>{display}</ul>}</div>;
 }
 
 export default HomePage;
