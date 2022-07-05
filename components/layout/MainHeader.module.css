@@ -1,4 +1,17 @@
 .container {
-  background-color: aqua;
-  /* width: 100vw; */
+  /* background-color: aqua; */
+  display: flex;
+  justify-content: space-between;
+}
+
+.container-item {
+  display: flex;
+}
+
+.container-item-label {
+  padding: 1rem;
+}
+
+.lang {
+  padding: 0.25rem;
 }

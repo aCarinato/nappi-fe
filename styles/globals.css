@@ -4,15 +4,14 @@
   box-sizing: border-box;
 }
 
-:root {
-  /* box-sizing: border-box;
+/* :root {
   --main-neutral-color: #616161;
   --main-red-color: #ff6b6b;
   --main-blue-color: #1a535c;
   --main-yellow-color: #ffd100;
   --main-cyan-color: #4ecdc4;
-  --main-disabled-color: rgb(171, 171, 171); */
-}
+  --main-disabled-color: rgb(171, 171, 171);
+} */
 
 html {
   /* height: 100%; */
