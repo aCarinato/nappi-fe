@@ -1,15 +1,45 @@
 .container {
-  /* background-color: aqua; */
   display: flex;
   justify-content: space-between;
+  height: 4rem;
+  border-bottom: 1px solid green;
 }
 
 .container-item {
   display: flex;
+  cursor: pointer;
 }
 
 .container-item-label {
-  padding: 1rem;
+  /* padding: 1rem; */
+  line-height: 4rem;
+  text-align: center;
+  padding: 0 1rem;
+  cursor: pointer;
+}
+
+.container-item-locales {
+  width: 2.5rem;
+}
+
+.container-item-locale {
+  height: 4rem;
+  line-height: 4rem;
+  text-align: center;
+}
+
+.container-flex-vertical {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  z-index: 0;
+  /* background-color: aquamarine; */
+
+  text-align: center;
+  width: 2.5rem;
+  border-left: 1px solid green;
+  border-right: 1px solid green;
+  border-bottom: 1px solid green;
 }
 
 .lang {
