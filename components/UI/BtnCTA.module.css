@@ -1,0 +1,15 @@
+.btn-light {
+  background-color: var(--main-cta-light-color);
+  padding: 1rem;
+  cursor: pointer;
+  font-family: 'Cormorant Garamond', serif;
+  color: white;
+  font-weight: bold;
+  border: none;
+  font-size: 1rem;
+  border-radius: 0.25rem;
+}
+
+.btn-light:hover {
+  background-color: var(--main-cta-light-hover-color);
+}

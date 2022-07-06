@@ -12,7 +12,7 @@ function MainHeader() {
   const [isVisible, setIsVisible] = useState(false);
 
   const node = useRef();
-  console.log(node);
+  // console.log(node);
 
   // Track events outside scope
   const clickOutside = (e) => {
@@ -23,11 +23,11 @@ function MainHeader() {
       node.current.contains(e.target)
     ) {
       // inside click
-      console.log('clicked inside');
+      // console.log('clicked inside');
       return;
     }
     // outside click
-    console.log('clicked outside scope');
+    // console.log('clicked outside scope');
     setIsVisible(false);
   };
 
