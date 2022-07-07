@@ -15,63 +15,82 @@ function ProductItem(props) {
   };
 
   return (
-    <div>
-      {locale === 'en' && (
-        <Link href={`/product/${product.slugEN}`}>
-          <a>
-            <img src={product.image} alt={product.nameEN} />
-          </a>
-        </Link>
-      )}
-      {locale === 'it' && (
-        <Link href={`/product/${product.slugIT}`}>
-          <a>
-            <img src={product.image} alt={product.nameIT} />
-          </a>
-        </Link>
-      )}
-      {locale === 'de' && (
-        <Link href={`/product/${product.slugDE}`}>
-          <a>
-            <img src={product.image} alt={product.nameDE} />
-          </a>
-        </Link>
-      )}
-      <div>
+    <div className={classes.container}>
+      <div className={classes.imageContainer}>
         {locale === 'en' && (
           <Link href={`/product/${product.slugEN}`}>
             <a>
-              <h2>{product.nameEN}</h2>
+              <img
+                className={classes.image}
+                src={product.image}
+                alt={product.nameEN}
+              />
             </a>
           </Link>
         )}
         {locale === 'it' && (
           <Link href={`/product/${product.slugIT}`}>
             <a>
-              <h2>{product.nameIT}</h2>
+              <img
+                className={classes.image}
+                src={product.image}
+                alt={product.nameIT}
+              />
             </a>
           </Link>
         )}
         {locale === 'de' && (
           <Link href={`/product/${product.slugDE}`}>
             <a>
+              <img
+                className={classes.image}
+                src={product.image}
+                alt={product.nameDE}
+              />
+            </a>
+          </Link>
+        )}
+      </div>
+
+      <div>
+        {locale === 'en' && (
+          <Link href={`/product/${product.slugEN}`}>
+            <a className={classes['product-name']}>
+              <h2>{product.nameEN}</h2>
+            </a>
+          </Link>
+        )}
+        {locale === 'it' && (
+          <Link href={`/product/${product.slugIT}`}>
+            <a className={classes['product-name']}>
+              <h2>{product.nameIT}</h2>
+            </a>
+          </Link>
+        )}
+        {locale === 'de' && (
+          <Link href={`/product/${product.slugDE}`}>
+            <a className={classes['product-name']}>
               <h2>{product.nameDE}</h2>
             </a>
           </Link>
         )}
-        <p>€ {product.price}</p>
-        <BtnCTA
-          label={
-            locale === 'en'
-              ? 'Add to Cart'
-              : locale === 'it'
-              ? 'Aggiungi al carrello'
-              : 'Opladen naar kart'
-          }
-          onCLickAction={addToCartHandler}
-          icon={true}
-          iconType="bi:cart"
-        />
+        <div className={classes['line-wrapper']}>
+          <p>€ {product.price}</p>
+        </div>
+        <div className={classes['line-wrapper']}>
+          <BtnCTA
+            label={
+              locale === 'en'
+                ? 'Add to Cart'
+                : locale === 'it'
+                ? 'Aggiungi al carrello'
+                : 'Opladen naar kart'
+            }
+            onCLickAction={addToCartHandler}
+            icon={true}
+            iconType="bi:cart"
+          />
+        </div>
       </div>
     </div>
   );
