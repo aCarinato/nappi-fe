@@ -1,6 +1,8 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 
+import ProductList from '../components/products/ProductList';
+
 function HomePage() {
   const [isLoading, setIsLoading] = useState(false);
   // const [messageFromServer, setMessageFromServer] = useState('');
@@ -38,7 +40,7 @@ function HomePage() {
         <div>Loading merda</div>
       ) : (
         <>
-          <ul>{display}</ul>
+          <ProductList products={products} />
         </>
       )}
     </div>
