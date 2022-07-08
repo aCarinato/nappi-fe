@@ -3,8 +3,12 @@ import BtnCTA from '../UI/BtnCTA';
 
 import { useRouter } from 'next/router';
 
+import { Store } from '../../context/Store';
+import { useContext } from 'react';
+
 function ProductDetails(props) {
   const {
+    product,
     productName,
     productNameSrc,
     productCategory,
@@ -17,6 +21,13 @@ function ProductDetails(props) {
 
   const router = useRouter();
   const { locale } = router;
+
+  const { state, dispatch } = useContext(Store);
+  const { cart } = state;
+
+  const addToCartHandler = () => {
+    dispatch({ type: 'CART_ADD_ITEM', payload: { ...product, quantity: 1 } });
+  };
 
   return (
     <div className={classes['main-container-grid']}>
@@ -50,13 +61,25 @@ function ProductDetails(props) {
       <div>
         <div className={classes['action-card']}>
           <div className={classes['action-card-flex']}>
-            <div className={classes['flex-item']}>Price</div>
+            <div className={classes['flex-item']}>
+              {locale === 'en' ? 'Price' : locale === 'it' ? 'Prezzo' : 'Preis'}
+            </div>
             <div className={classes['flex-item']}>€ {productPrice}</div>
           </div>
           <div className={classes['action-card-flex']}>
             <div className={classes['flex-item']}>Status:</div>
             <div className={classes['flex-item']}>
-              {productInStock > 0 ? 'In stock' : 'Unavailable'}
+              {locale === 'en' && productInStock > 0
+                ? 'In stock'
+                : locale === 'en' && productInStock === 0
+                ? 'Unavailable'
+                : locale === 'it' && productInStock > 0
+                ? 'Disponibile'
+                : locale === 'it' && productInStock === 0
+                ? 'Non disponibile'
+                : locale === 'de' && productInStock > 0
+                ? 'Auf lager'
+                : 'Nicht verfügbar'}
             </div>
           </div>
           <div className={classes['btn-wrapper']}>
@@ -68,11 +91,12 @@ function ProductDetails(props) {
                   ? 'Aggiungi al carrello'
                   : 'Opladen naar kart'
               }
-              onCLickAction={() => {}}
+              onCLickAction={addToCartHandler}
               icon={true}
               iconType="bi:cart"
             />
           </div>
+          <div></div>
         </div>
       </div>
     </div>

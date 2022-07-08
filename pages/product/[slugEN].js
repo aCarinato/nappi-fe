@@ -59,6 +59,7 @@ function ProductPageEN() {
       ) : (
         <Fragment>
           <ProductDetails
+            product={selectedProduct}
             productName={selectedProduct.nameEN}
             productNameSrc={selectedProduct.image}
             productCategory={selectedProduct.categoryEN}
