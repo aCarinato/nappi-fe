@@ -3,14 +3,14 @@ import { useEffect, useState } from 'react';
 
 import ProductList from '../components/products/ProductList';
 
-function HomePage() {
-  const [isLoading, setIsLoading] = useState(false);
-  // const [messageFromServer, setMessageFromServer] = useState('');
-  const [products, setProducts] = useState([]);
+import { useMainContext } from '../context/Context';
 
-  const display = products.map((product) => (
-    <li key={product._id}>{product.nameIT}</li>
-  ));
+function HomePage() {
+  const { productsData, setProductsData } = useMainContext();
+
+  const [isLoading, setIsLoading] = useState(false);
+
+  // const [products, setProducts] = useState([]);
 
   const fetchMessage = async () => {
     // let message;
@@ -20,10 +20,9 @@ function HomePage() {
       const res = await axios.get(`${process.env.NEXT_PUBLIC_API}/products/`);
       resData = res.data.products;
       // console.log(res.data);
-      setProducts(resData);
+      // setProducts(resData);
+      setProductsData(resData);
 
-      // message = res.data.message;
-      // setMessageFromServer(message);
       setIsLoading(false);
     } catch (err) {
       console.log(err);
@@ -40,7 +39,7 @@ function HomePage() {
         <div>Loading merda</div>
       ) : (
         <>
-          <ProductList products={products} />
+          <ProductList products={productsData} />
         </>
       )}
     </div>

@@ -21,9 +21,14 @@
   padding: 0.5rem 0;
 }
 
+.btn-wrapper {
+  width: 50%;
+  margin: auto;
+}
+
 .product-name {
   text-decoration: none;
-  color: red;
+  /* color: red; */
 }
 
 /* @media (min-width: 539px) {

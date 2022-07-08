@@ -78,18 +78,20 @@ function ProductItem(props) {
           <p>€ {product.price}</p>
         </div>
         <div className={classes['line-wrapper']}>
-          <BtnCTA
-            label={
-              locale === 'en'
-                ? 'Add to Cart'
-                : locale === 'it'
-                ? 'Aggiungi al carrello'
-                : 'Opladen naar kart'
-            }
-            onCLickAction={addToCartHandler}
-            icon={true}
-            iconType="bi:cart"
-          />
+          <div className={classes['btn-wrapper']}>
+            <BtnCTA
+              label={
+                locale === 'en'
+                  ? 'Add to Cart'
+                  : locale === 'it'
+                  ? 'Aggiungi al carrello'
+                  : 'Opladen naar kart'
+              }
+              onCLickAction={addToCartHandler}
+              icon={true}
+              iconType="bi:cart"
+            />
+          </div>
         </div>
       </div>
     </div>

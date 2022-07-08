@@ -1,6 +1,6 @@
 .btn-light {
   background-color: var(--main-cta-light-color);
-  padding: 1rem;
+  padding: 0.5rem 1rem;
   cursor: pointer;
   font-family: 'Cormorant Garamond', serif;
   color: white;
@@ -8,6 +8,7 @@
   border: none;
   font-size: 0.9rem;
   border-radius: 0.25rem;
+  width: 100%;
 }
 
 .btn-light:hover {
