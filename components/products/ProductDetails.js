@@ -23,10 +23,20 @@ function ProductDetails(props) {
   const { locale } = router;
 
   const { state, dispatch } = useContext(Store);
-  const { cart } = state;
+  // const { cart } = state;
 
   const addToCartHandler = () => {
-    dispatch({ type: 'CART_ADD_ITEM', payload: { ...product, quantity: 1 } });
+    const existItem = state.cart.cartItems.find((x) => x._id === product._id);
+    const quantity = existItem ? existItem.quantity + 1 : 1;
+
+    if (product.countInStock < quantity) {
+      if (locale === 'en') alert('Sorry. Product out of stock');
+      if (locale === 'it') alert('Prodotto esaurito');
+      if (locale === 'de') alert('Es tut uns leid. Produkt nicht auf Lager');
+      return;
+    }
+
+    dispatch({ type: 'CART_ADD_ITEM', payload: { ...product, quantity } });
   };
 
   return (
