@@ -44,7 +44,13 @@ function MainHeader() {
   return (
     <header className={classes.container}>
       <div className={classes['container-item']}>
-        <div className={classes['container-item-label']}>Nappitello</div>
+        <div
+          className={classes['container-item-label']}
+          onClick={() => router.push('/')}
+        >
+          {' '}
+          Nappitello
+        </div>
       </div>
       <div className={classes['container-item']}>
         {locale === 'it' && (

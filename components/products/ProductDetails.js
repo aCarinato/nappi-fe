@@ -29,9 +29,21 @@ function ProductDetails(props) {
             <h1 className={classes['product-name-h1']}>{productName}</h1>
           </li>
           <li>Catergory: {productCategory}</li>
-          <li>
-            {productRating} of {numReviews} reviews
-          </li>
+          {locale === 'en' && (
+            <li>
+              {productRating} of {numReviews} reviews
+            </li>
+          )}
+          {locale === 'it' && (
+            <li>
+              {productRating} di {numReviews} recenesioni
+            </li>
+          )}
+          {locale === 'de' && (
+            <li>
+              {productRating} von {numReviews} recentie
+            </li>
+          )}
           <li>Description: {productDescription}</li>
         </ul>
       </div>

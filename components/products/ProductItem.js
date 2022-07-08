@@ -29,7 +29,7 @@ function ProductItem(props) {
           </Link>
         )}
         {locale === 'it' && (
-          <Link href={`/product/${product.slugIT}`}>
+          <Link href={`/prodotto/${product.slugIT}`}>
             <a>
               <img
                 className={classes.image}
@@ -40,7 +40,7 @@ function ProductItem(props) {
           </Link>
         )}
         {locale === 'de' && (
-          <Link href={`/product/${product.slugDE}`}>
+          <Link href={`/produkt/${product.slugDE}`}>
             <a>
               <img
                 className={classes.image}
@@ -61,14 +61,14 @@ function ProductItem(props) {
           </Link>
         )}
         {locale === 'it' && (
-          <Link href={`/product/${product.slugIT}`}>
+          <Link href={`/prodotto/${product.slugIT}`}>
             <a className={classes['product-name']}>
               <h2>{product.nameIT}</h2>
             </a>
           </Link>
         )}
         {locale === 'de' && (
-          <Link href={`/product/${product.slugDE}`}>
+          <Link href={`/produkt/${product.slugDE}`}>
             <a className={classes['product-name']}>
               <h2>{product.nameDE}</h2>
             </a>
