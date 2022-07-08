@@ -7,8 +7,12 @@
 }
 
 :root {
+  /* Colors */
   --main-cta-light-color: rgb(183, 142, 37);
   --main-cta-light-hover-color: rgb(147, 110, 18);
+
+  /* Radius */
+  --main-border-radius: 0.25rem;
 }
 
 html {
