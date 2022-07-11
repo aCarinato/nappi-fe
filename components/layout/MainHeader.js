@@ -68,7 +68,10 @@ function MainHeader() {
           </div>
         )}
         {locale === 'en' && (
-          <div className={classes['container-item-label']}>
+          <div
+            className={classes['container-item-label']}
+            onClick={() => router.push('/cart')}
+          >
             Cart{' '}
             {cart.cartItems.length > 0 && (
               <span className={classes['cart-items']}>

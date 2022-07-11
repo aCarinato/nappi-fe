@@ -28,3 +28,19 @@ body {
   min-height: 100vh;
   font-family: 'Cormorant Garamond', serif;
 }
+
+h1 {
+  font-size: 1.25rem;
+}
+
+@media (min-width: 520px) {
+  h1 {
+    font-size: 1.5rem;
+  }
+}
+
+@media (min-width: 950px) {
+  h1 {
+    font-size: 1.75rem;
+  }
+}

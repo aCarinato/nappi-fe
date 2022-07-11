@@ -47,7 +47,7 @@ function ProductDetails(props) {
       <div>
         <ul className={classes['product-detail-list']}>
           <li>
-            <h1 className={classes['product-name-h1']}>{productName}</h1>
+            <h1>{productName}</h1>
           </li>
           <li>Catergory: {productCategory}</li>
           {locale === 'en' && (
