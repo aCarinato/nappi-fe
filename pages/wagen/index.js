@@ -34,8 +34,8 @@ function CartPage() {
     if (locale === 'it') {
       router.push('/carrello');
     }
-    if (locale === 'de') {
-      router.push('/wagen');
+    if (locale === 'en') {
+      router.push('/cart');
     }
   }, [locale]);
 

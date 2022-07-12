@@ -58,7 +58,10 @@ function MainHeader() {
       </div>
       <div className={classes['container-item']}>
         {locale === 'it' && (
-          <div className={classes['container-item-label']}>
+          <div
+            className={classes['container-item-label']}
+            onClick={() => router.push('/carrello')}
+          >
             Carrello{' '}
             {cart.cartItems.length > 0 && (
               <span className={classes['cart-items']}>
@@ -81,8 +84,11 @@ function MainHeader() {
           </div>
         )}
         {locale === 'de' && (
-          <div className={classes['container-item-label']}>
-            Kart{' '}
+          <div
+            className={classes['container-item-label']}
+            onClick={() => router.push('/wagen')}
+          >
+            Wagen{' '}
             {cart.cartItems.length > 0 && (
               <span className={classes['cart-items']}>
                 {cart.cartItems.reduce((a, c) => a + c.quantity, 0)}

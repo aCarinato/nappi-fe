@@ -31,8 +31,8 @@ function CartPage() {
   const { locale } = router;
 
   useEffect(() => {
-    if (locale === 'it') {
-      router.push('/carrello');
+    if (locale === 'en') {
+      router.push('/cart');
     }
     if (locale === 'de') {
       router.push('/wagen');
@@ -44,7 +44,7 @@ function CartPage() {
       <h1>Shopping Cart</h1>
       {cartItems.length === 0 ? (
         <div>
-          Cart is empty. Go to <Link href="/">home page</Link>
+          Il carrello è vuoto. Vai alla <Link href="/">home page</Link>
         </div>
       ) : (
         <CartList

@@ -1,13 +1,15 @@
-import { createContext, useReducer } from 'react';
+import { createContext, useEffect, useReducer, useState } from 'react';
 
 export const Store = createContext();
 
-const initialState = {
-  cart: { cartItems: [] },
-};
+const initialState = { cart: { cartItems: [] } };
 
 function reducer(state, action) {
   switch (action.type) {
+    case 'CART_LOCALSTORAGE': {
+      const cartItems = action.payload;
+      return { ...state, cart: { ...cartItems } };
+    }
     case 'CART_ADD_ITEM': {
       const newItem = action.payload;
       const existItem = state.cart.cartItems.find(
@@ -18,13 +20,23 @@ function reducer(state, action) {
             item._id === existItem._id ? newItem : item
           )
         : [...state.cart.cartItems, newItem];
+
+      //   if (typeof window !== undefined)
+      localStorage.setItem(
+        'nappi-cart',
+        JSON.stringify({ ...state.cart, cartItems })
+      );
       return { ...state, cart: { ...state.cart, cartItems } };
     }
     case 'CART_REMOVE_ITEM': {
       const cartItems = state.cart.cartItems.filter(
         (item) => item._id !== action.payload._id
       );
-      //   Cookies.set('cart', JSON.stringify({ ...state.cart, cartItems }));
+      //   if (typeof window !== undefined)
+      localStorage.setItem(
+        'nappi-cart',
+        JSON.stringify({ ...state.cart, cartItems })
+      );
       return { ...state, cart: { ...state.cart, cartItems } };
     }
     default:
@@ -35,5 +47,13 @@ function reducer(state, action) {
 export function StoreProvider({ children }) {
   const [state, dispatch] = useReducer(reducer, initialState);
   const value = { state, dispatch };
+
+  useEffect(() => {
+    const storedCart = JSON.parse(localStorage.getItem('nappi-cart'));
+    if (storedCart !== null) {
+      dispatch({ type: 'CART_LOCALSTORAGE', payload: storedCart });
+    }
+  }, []);
+
   return <Store.Provider value={value}>{children}</Store.Provider>;
 }
