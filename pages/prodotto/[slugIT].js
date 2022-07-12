@@ -56,6 +56,7 @@ function PaginaProdottoIT() {
       ) : (
         <Fragment>
           <ProductDetails
+            product={selectedProduct}
             productName={selectedProduct.nameIT}
             productNameSrc={selectedProduct.image}
             productCategory={selectedProduct.categoryIT}

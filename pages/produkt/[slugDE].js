@@ -54,6 +54,7 @@ function ProduktSeiteDE() {
       ) : (
         <Fragment>
           <ProductDetails
+            product={selectedProduct}
             productName={selectedProduct.nameDE}
             productNameSrc={selectedProduct.image}
             productCategory={selectedProduct.categoryDE}

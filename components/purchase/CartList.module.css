@@ -1,0 +1,37 @@
+/* .main-container {
+  width: 70%;
+} */
+
+.flex-row {
+  display: flex;
+  /* justify-content: space-around; */
+}
+
+.flex-row-item {
+  /* flex-grow: 1; */
+  width: 25%;
+}
+
+.icon {
+  cursor: pointer;
+}
+
+@media (min-width: 520px) {
+  .main-container-flex {
+    display: flex;
+  }
+
+  .main-container-flex-item70 {
+    width: 75%;
+  }
+
+  .main-container-flex-item30 {
+    width: 25%;
+  }
+}
+
+/* @media (min-width: 950px) {
+.main-container {
+    width: 70%;
+}
+} */

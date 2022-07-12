@@ -45,3 +45,10 @@
 .lang {
   padding: 0.25rem;
 }
+
+.cart-items {
+  border-radius: 50%;
+  color: white;
+  background-color: green;
+  padding: 0 1rem;
+}
