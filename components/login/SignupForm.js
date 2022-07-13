@@ -4,6 +4,8 @@ import classes from './SignupForm.module.css';
 import BtnCTA from '../UI/BtnCTA';
 import { useRouter } from 'next/router';
 
+import axios from 'axios';
+
 function SignupForm(props) {
   const { loginMode, onSwitchMode } = props;
 
@@ -13,6 +15,46 @@ function SignupForm(props) {
 
   const router = useRouter();
   const { locale } = router;
+
+  const formSubmit = async (e) => {
+    e.preventDefault();
+    // /api/auth/signup
+
+    const enteredUsername = usernameInputRef.current.value;
+    const enteredEmail = emailInputRef.current.value;
+    const enteredPassword = passwordInputRef.current.value;
+
+    const signupUser = {
+      username: enteredUsername,
+      email: enteredEmail,
+      password: enteredPassword,
+    };
+
+    try {
+      const res = await axios.post(
+        `${process.env.NEXT_PUBLIC_API}/auth/signup`,
+        signupUser
+      );
+
+      console.log(res);
+
+      // if (res.data.error) {
+      //   // setShowError(true);
+      //   setError(res.data.error);
+      // } else {
+      //   login(
+      //     res.data.username,
+      //     res.data.email,
+      //     res.data.token,
+      //     res.data.preferences
+      //   );
+      //   // router.push(`/profilo/${res.data.username}`);
+      //   router.push(`/profilo`);
+      // }
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <div className={classes.container}>
@@ -68,7 +110,7 @@ function SignupForm(props) {
                 ? 'Crea profilo'
                 : 'Anmeldung'
             }
-            onCLickAction={() => {}}
+            onCLickAction={formSubmit}
           />
         </div>
       </form>
