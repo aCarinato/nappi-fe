@@ -1,7 +1,11 @@
-import React from 'react';
+import UserRoute from '../../components/routes/UserRoute';
 
 function ProfiloPage() {
-  return <div>ProfiloPage</div>;
+  return (
+    <UserRoute>
+      <div>Profilo Page</div>
+    </UserRoute>
+  );
 }
 
 export default ProfiloPage;

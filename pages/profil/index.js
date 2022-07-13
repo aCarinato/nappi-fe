@@ -1,7 +1,11 @@
-import React from 'react';
+import UserRoute from '../../components/routes/UserRoute';
 
 function ProfilPage() {
-  return <div>ProfilPage</div>;
+  return (
+    <UserRoute>
+      <div>ProfilPage</div>
+    </UserRoute>
+  );
 }
 
 export default ProfilPage;
