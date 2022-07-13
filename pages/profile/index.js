@@ -10,6 +10,7 @@ import { useMainContext } from '../../context/Context';
 function ProfilePage() {
   const { authState } = useMainContext();
   const router = useRouter();
+  const { locale } = router;
 
   const [user, setUser] = useState({});
   const [loading, setLoading] = useState(true);
@@ -44,13 +45,23 @@ function ProfilePage() {
     };
   }, [authState]);
 
+  useEffect(() => {
+    if (locale === 'it') {
+      router.push(`/profilo`);
+    }
+
+    if (locale === 'de') {
+      router.push(`/profil`);
+    }
+  }, [locale]);
+
   return (
     <Fragment>
       {loading ? (
         <SpinningLoader />
       ) : (
         <UserRoute>
-          <div>ProfilePage {user.username}</div>
+          <div>Profile Page. {user.username}</div>
         </UserRoute>
       )}
     </Fragment>
