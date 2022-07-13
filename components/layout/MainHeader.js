@@ -1,9 +1,10 @@
 import classes from './MainHeader.module.css';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
-
+// context
+import { useMainContext } from '../../context/Context';
 import { Store } from '../../context/Store';
-
+// hooks
 import { useEffect, useRef, useState, useContext } from 'react';
 
 function MainHeader() {
@@ -11,9 +12,12 @@ function MainHeader() {
   const { locales, locale } = router;
 
   const [isVisible, setIsVisible] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const { state, dispatch } = useContext(Store);
   const { cart } = state;
+
+  const { authState } = useMainContext();
 
   const node = useRef();
   // console.log(node);
@@ -35,6 +39,12 @@ function MainHeader() {
     setIsVisible(false);
   };
 
+  const goToProfileHandler = () => {
+    if (locale === 'en') router.push('/profile');
+    if (locale === 'it') router.push('/profilo');
+    if (locale === 'de') router.push('/profil');
+  };
+
   // Do something after component renders
   useEffect(() => {
     document.addEventListener('mousedown', clickOutside);
@@ -44,6 +54,14 @@ function MainHeader() {
       document.removeEventListener('mousedown', clickOutside);
     };
   }, []);
+
+  useEffect(() => {
+    if (authState !== null && authState.username !== '') {
+      setIsLoggedIn(true);
+    } else {
+      setIsLoggedIn(false);
+    }
+  }, [authState]);
 
   return (
     <header className={classes.container}>
@@ -96,7 +114,22 @@ function MainHeader() {
             )}
           </div>
         )}
-        <div className={classes['container-item-label']}>Login</div>
+        {isLoggedIn ? (
+          <div
+            className={classes['container-item-label']}
+            onClick={goToProfileHandler}
+          >
+            {authState.username}
+          </div>
+        ) : (
+          <div
+            className={classes['container-item-label']}
+            onClick={() => router.push('/login')}
+          >
+            Login
+          </div>
+        )}
+
         <div className={classes['container-item-locales']}>
           <div
             className={classes['container-item-locale']}

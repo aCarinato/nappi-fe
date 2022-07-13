@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-
+// own component
+import SpinningLoader from '../components/UI/SpinningLoader';
 import ProductList from '../components/products/ProductList';
 
 import { useMainContext } from '../context/Context';
@@ -36,7 +37,7 @@ function HomePage() {
   return (
     <div>
       {isLoading ? (
-        <div>Loading merda</div>
+        <SpinningLoader />
       ) : (
         <>
           <ProductList products={productsData} />
