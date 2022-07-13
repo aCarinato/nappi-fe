@@ -79,7 +79,7 @@ function CartList(props) {
         <div>
           <BtnCTA
             label="Check Out"
-            onCLickAction={() => router.push('/shipping')}
+            onCLickAction={() => router.push('login?redirect=/shipping')}
             icon={true}
             iconType="bi:cart"
           />

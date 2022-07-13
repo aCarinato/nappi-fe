@@ -96,7 +96,12 @@ function MainHeader() {
             )}
           </div>
         )}
-        <div className={classes['container-item-label']}>Login</div>
+        <div
+          className={classes['container-item-label']}
+          onClick={() => router.push('/login')}
+        >
+          Login
+        </div>
         <div className={classes['container-item-locales']}>
           <div
             className={classes['container-item-locale']}
