@@ -6,12 +6,15 @@ import { useMainContext } from '../../context/Context';
 import { Store } from '../../context/Store';
 // hooks
 import { useEffect, useRef, useState, useContext } from 'react';
+// own components
+import DropdownMenu from './DropdownMenu';
 
 function MainHeader() {
   const router = useRouter();
   const { locales, locale } = router;
 
-  const [isVisible, setIsVisible] = useState(false);
+  const [langMenuOpen, setLangMenuOpen] = useState(false);
+  const [profileMenuOpen, setProfileMenuOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const { state, dispatch } = useContext(Store);
@@ -20,30 +23,53 @@ function MainHeader() {
   const { authState } = useMainContext();
 
   const node = useRef();
+  const nodeUser = useRef();
   // console.log(node);
 
   // Track events outside scope
   const clickOutside = (e) => {
     // console.log(node.current);
     if (
-      node.current &&
-      node.current !== null &&
-      node.current.contains(e.target)
+      (node.current &&
+        node.current !== null &&
+        node.current.contains(e.target)) ||
+      (nodeUser.current &&
+        nodeUser.current !== null &&
+        nodeUser.current.contains(e.target))
     ) {
       // inside click
       // console.log('clicked inside');
       return;
     }
+
     // outside click
     // console.log('clicked outside scope');
-    setIsVisible(false);
+    setLangMenuOpen(false);
+    setProfileMenuOpen(false);
   };
 
   const goToProfileHandler = () => {
     if (locale === 'en') router.push('/profile');
     if (locale === 'it') router.push('/profilo');
     if (locale === 'de') router.push('/profil');
+    setProfileMenuOpen(false);
   };
+
+  const goToHistoryHandler = () => {
+    console.log('order history');
+    setProfileMenuOpen(false);
+  };
+
+  const logoutHandler = () => {
+    console.log('logout');
+    setProfileMenuOpen(false);
+  };
+
+  const profileMenuItems = [
+    { name: 'Profile', action: goToProfileHandler },
+    { name: 'Order History', action: goToHistoryHandler },
+    { name: 'Logout', action: logoutHandler },
+  ];
 
   // Do something after component renders
   useEffect(() => {
@@ -115,11 +141,19 @@ function MainHeader() {
           </div>
         )}
         {isLoggedIn ? (
-          <div
-            className={classes['container-item-label']}
-            onClick={goToProfileHandler}
-          >
-            {authState.username}
+          <div className={classes['container-item-user']}>
+            <div
+              className={classes['container-item-label']}
+              onClick={() => {
+                setProfileMenuOpen((current) => !current);
+                setLangMenuOpen(false);
+              }}
+            >
+              {authState.username}
+            </div>
+            {profileMenuOpen && (
+              <DropdownMenu ref={nodeUser} menuItems={profileMenuItems} />
+            )}
           </div>
         ) : (
           <div
@@ -129,22 +163,26 @@ function MainHeader() {
             Login
           </div>
         )}
+        {/* <div className={classes['container-item-label']}></div> */}
 
         <div className={classes['container-item-locales']}>
           <div
             className={classes['container-item-locale']}
-            onClick={() => setIsVisible((current) => !current)}
+            onClick={() => {
+              setLangMenuOpen((current) => !current);
+              setProfileMenuOpen(false);
+            }}
           >
             {locale}
           </div>
-          {isVisible && (
+          {langMenuOpen && (
             <div ref={node} className={classes['container-flex-vertical']}>
               {locales.map((l, i) => {
                 const { pathname, query, asPath } = router;
                 if (l !== locale) {
                   return (
                     <span
-                      onClick={() => setIsVisible((current) => !current)}
+                      onClick={() => setLangMenuOpen((current) => !current)}
                       key={i}
                       className={classes.lang}
                     >

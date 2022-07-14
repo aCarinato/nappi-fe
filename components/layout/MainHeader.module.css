@@ -16,6 +16,12 @@
   text-align: center;
   padding: 0 1rem;
   cursor: pointer;
+  /* width: 100%; */
+}
+
+.container-item-user {
+  width: 4rem;
+  /* position: absolute; */
 }
 
 .container-item-locales {
@@ -51,4 +57,11 @@
   color: white;
   background-color: green;
   padding: 0 1rem;
+}
+
+.merda {
+  position: absolute;
+  /* z-index: 2; */
+  background-color: aliceblue;
+  cursor: pointer;
 }

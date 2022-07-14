@@ -1,0 +1,25 @@
+.container-flex-vertical {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  /* z-index: 1; */
+  background-color: white;
+
+  text-align: center;
+  width: 7.5rem;
+  transform: translateX(-47%);
+  /* border-left: 1px solid green;
+  border-right: 1px solid green; */
+  /* border-bottom: 1px solid green; */
+}
+
+.container-flex-vertical-item {
+  /* background-color: aqua; */
+  border-bottom: 1px solid green;
+  /* position: absolute; */
+  /* z-index: 2; */
+}
+
+.container-flex-vertical-item:hover {
+  background-color: azure;
+}
