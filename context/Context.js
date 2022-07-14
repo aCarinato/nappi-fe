@@ -4,7 +4,7 @@ const mainContext = React.createContext({
   //   productsData: [],
   //   setProductsData: () => {},
   authState: {},
-  login: (token) => {},
+  login: () => {},
   logout: () => {},
 });
 
@@ -29,7 +29,7 @@ export function ContextProvider({ children }) {
   }, []);
 
   const loginHandler = (username, email, token) => {
-    localStorage.setItem('token', token);
+    // localStorage.setItem('token', token);
 
     localStorage.setItem(
       'nappi-user-auth',
@@ -47,12 +47,23 @@ export function ContextProvider({ children }) {
     });
   };
 
+  const logoutHandler = () => {
+    // localStorage.removeItem('token');
+    localStorage.removeItem('nappi-user-auth');
+    setAuthState({
+      username: '',
+      email: '',
+      token: '',
+    });
+  };
+
   const value = {
     productsData,
     setProductsData,
     // AUTH
     authState: authState,
     login: loginHandler,
+    logout: logoutHandler,
   };
 
   return <mainContext.Provider value={value}>{children}</mainContext.Provider>;

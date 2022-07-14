@@ -20,7 +20,7 @@ function MainHeader() {
   const { state, dispatch } = useContext(Store);
   const { cart } = state;
 
-  const { authState } = useMainContext();
+  const { authState, logout } = useMainContext();
 
   const node = useRef();
   const nodeUser = useRef();
@@ -61,12 +61,17 @@ function MainHeader() {
   };
 
   const logoutHandler = () => {
-    console.log('logout');
+    // console.log('logout');
+    logout();
     setProfileMenuOpen(false);
   };
 
   const profileMenuItems = [
-    { name: 'Profile', action: goToProfileHandler },
+    {
+      name:
+        locale === 'en' ? 'Profile' : locale === 'it' ? 'Profilo' : 'Profil',
+      action: goToProfileHandler,
+    },
     { name: 'Order History', action: goToHistoryHandler },
     { name: 'Logout', action: logoutHandler },
   ];

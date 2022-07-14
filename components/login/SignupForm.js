@@ -6,6 +6,8 @@ import { useRouter } from 'next/router';
 
 import axios from 'axios';
 
+import { useMainContext } from '../../context/Context';
+
 function SignupForm(props) {
   const { loginMode, onSwitchMode } = props;
 
@@ -15,6 +17,8 @@ function SignupForm(props) {
 
   const router = useRouter();
   const { locale } = router;
+
+  const { login } = useMainContext();
 
   const formSubmit = async (e) => {
     e.preventDefault();
@@ -36,21 +40,19 @@ function SignupForm(props) {
         signupUser
       );
 
-      console.log(res);
+      // console.log(res);
 
-      // if (res.data.error) {
-      //   // setShowError(true);
-      //   setError(res.data.error);
-      // } else {
-      //   login(
-      //     res.data.username,
-      //     res.data.email,
-      //     res.data.token,
-      //     res.data.preferences
-      //   );
-      //   // router.push(`/profilo/${res.data.username}`);
-      //   router.push(`/profilo`);
-      // }
+      if (res.data.error) {
+        // setShowError(true);
+        // setError(res.data.error);
+        console.log(res.data.error);
+      } else {
+        login(res.data.username, res.data.email, res.data.token);
+        // router.push(`/profilo/${res.data.username}`);
+        if (locale === 'en') router.push(`/profile`);
+        if (locale === 'it') router.push(`/profilo`);
+        if (locale === 'de') router.push(`/profil`);
+      }
     } catch (err) {
       console.log(err);
     }
