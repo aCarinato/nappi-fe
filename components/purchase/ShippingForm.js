@@ -15,7 +15,7 @@ function ShippingForm() {
   const { state, dispatch } = useContext(Store);
   const { cart } = state;
   const { shippingAddress } = cart;
-  console.log(shippingAddress);
+  //   console.log(shippingAddress);
 
   const [fullName, setFullName] = useState('');
   const [address, setAddress] = useState('');
@@ -23,19 +23,30 @@ function ShippingForm() {
   const [postalCode, setPostalCode] = useState('');
   const [country, setCountry] = useState('');
 
+  // const [defaultFullName, setDefaultFullName] = useState('');
+  // const [defaultAddress, setDefaultAddress] = useState('');
+  // const [defaultCity, setDefaultCity] = useState('');
+  // const [defaultPostalCode, setDefaultPostalCode] = useState('');
+  // const [defaultCountry, setDefaultCountry] = useState('');
+
   //   const fullNameInputRef = useRef();
   //   const addressInputRef = useRef();
   //   const cityInputRef = useRef();
   //   const codeInputRef = useRef();
   //   const countryInputRef = useRef();
 
-  // useEffect(() => {
-  //   setFullName(shippingAddress.fullName);
-  //   setAddress(shippingAddress.address);
-  //   setCity(shippingAddress.city);
-  //   setPostalCode(shippingAddress.postalCode);
-  //   setCountry(shippingAddress.country);
-  // }, [shippingAddress]);
+  useEffect(() => {
+    // setDefaultFullName(shippingAddress.fullName);
+    // setDefaultAddress(shippingAddress.address);
+    // setDefaultCity(shippingAddress.city);
+    // setDefaultPostalCode(shippingAddress.postalCode);
+    // setDefaultCountry(shippingAddress.country);
+    setFullName(shippingAddress.fullName);
+    setAddress(shippingAddress.address);
+    setCity(shippingAddress.city);
+    setPostalCode(shippingAddress.postalCode);
+    setCountry(shippingAddress.country);
+  }, [shippingAddress]);
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -80,10 +91,11 @@ function ShippingForm() {
               : 'Nutzername'}
           </label>
           <input
-            value={fullName}
+            // value={fullName}
             className={classes.input}
             type="text"
             id="name"
+            defaultValue={fullName}
             required
             onChange={(e) => setFullName(e.target.value)}
             // ref={fullNameInputRef}
@@ -102,7 +114,7 @@ function ShippingForm() {
             type="text"
             id="address"
             required
-            value={address}
+            defaultValue={address}
             onChange={(e) => setAddress(e.target.value)}
             // ref={addressInputRef}
           />
@@ -116,7 +128,7 @@ function ShippingForm() {
             type="text"
             id="city"
             required
-            value={city}
+            defaultValue={city}
             onChange={(e) => setCity(e.target.value)}
             // ref={cityInputRef}
           />
@@ -134,7 +146,7 @@ function ShippingForm() {
             type="text"
             id="postal"
             required
-            value={postalCode}
+            defaultValue={postalCode}
             onChange={(e) => setPostalCode(e.target.value)}
             // ref={codeInputRef}
           />
@@ -148,7 +160,7 @@ function ShippingForm() {
             type="text"
             id="country"
             required
-            value={country}
+            defaultValue={country}
             onChange={(e) => setCountry(e.target.value)}
             // ref={countryInputRef}
           />
