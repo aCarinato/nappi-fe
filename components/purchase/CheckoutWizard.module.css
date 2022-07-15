@@ -1,0 +1,36 @@
+.container {
+  display: flex;
+  align-content: stretch;
+  /* background-color: aqua; */
+  width: 80%;
+  margin: auto;
+  color: var(--main-neutral-color);
+}
+
+.item {
+  flex-grow: 1;
+  font-size: 0.75rem;
+}
+
+.activeItemTxt {
+  /* flex-grow: 1; */
+  text-align: center;
+}
+
+.inactiveItemTxt {
+  /* flex-grow: 1; */
+  text-align: center;
+  color: var(--main-disabled-color);
+}
+
+.activeItemBottom {
+  width: 95%;
+  margin: auto;
+  border-bottom: 1px solid var(--main-neutral-color);
+}
+
+@media (max-width: 768px) {
+  .container {
+    width: 100%;
+  }
+}

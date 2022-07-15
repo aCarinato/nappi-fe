@@ -63,6 +63,7 @@ function MainHeader() {
   const logoutHandler = () => {
     // console.log('logout');
     logout();
+    router.push('/login');
     setProfileMenuOpen(false);
   };
 
