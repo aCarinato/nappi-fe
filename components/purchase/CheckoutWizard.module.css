@@ -1,0 +1,38 @@
+.container {
+  display: flex;
+  align-content: stretch;
+  /* background-color: aqua; */
+  /* width: 80%; */
+  margin: auto;
+  color: var(--main-neutral-color);
+}
+
+.item {
+  flex-grow: 1;
+  /* font-size: 0.75rem; */
+}
+
+.activeItemTxt {
+  /* flex-grow: 1; */
+  text-align: center;
+  vertical-align: bottom;
+}
+
+.inactiveItemTxt {
+  /* flex-grow: 1; */
+  text-align: center;
+  color: var(--main-disabled-color);
+  vertical-align: bottom;
+}
+
+.activeItemBottom {
+  width: 95%;
+  margin: auto;
+  border-bottom: 1px solid var(--main-neutral-color);
+}
+
+@media (max-width: 768px) {
+  .item {
+    font-size: 0.75rem;
+  }
+}

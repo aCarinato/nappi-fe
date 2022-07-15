@@ -1,26 +1,23 @@
-// hooks
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
-// own component
 import CheckoutWizard from '../../components/purchase/CheckoutWizard';
-import ShippingForm from '../../components/purchase/ShippingForm';
+import PaymentSelectionForm from '../../components/purchase/PaymentSelectionForm';
 import UserRoute from '../../components/routes/UserRoute';
 
-function ShippingPage() {
+function PagamentoPage() {
   const router = useRouter();
   const { locale } = router;
 
   useEffect(() => {
-    if (locale === 'it') router.push('/spedizione');
-    if (locale === 'de') router.push('/versand');
+    if (locale === 'en') router.push('/payment');
+    if (locale === 'de') router.push('/zahlung');
   }, [locale]);
-
   return (
     <UserRoute>
-      <CheckoutWizard activeStep={1} />
-      <ShippingForm />
+      <CheckoutWizard activeStep={2} />
+      <PaymentSelectionForm />
     </UserRoute>
   );
 }
 
-export default ShippingPage;
+export default PagamentoPage;

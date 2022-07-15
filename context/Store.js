@@ -2,7 +2,13 @@ import { createContext, useEffect, useReducer, useState } from 'react';
 
 export const Store = createContext();
 
-const initialState = { cart: { cartItems: [] } };
+const initialState = { cart: { cartItems: [], shippingAddress: {} } };
+// The next doesn't work
+// const initialState = {
+//   cart: localStorage.getItem('nappi-cart')
+//     ? JSON.parse(localStorage.getItem('nappi-cart'))
+//     : { cartItems: [] },
+// };
 
 function reducer(state, action) {
   switch (action.type) {
@@ -39,6 +45,25 @@ function reducer(state, action) {
       );
       return { ...state, cart: { ...state.cart, cartItems } };
     }
+    case 'SAVE_SHIPPING_ADDRESS':
+      return {
+        ...state,
+        cart: {
+          ...state.cart,
+          shippingAddress: {
+            ...state.cart.shippingAddress,
+            ...action.payload,
+          },
+        },
+      };
+    case 'SAVE_PAYMENT_METHOD':
+      return {
+        ...state,
+        cart: {
+          ...state.cart,
+          paymentMethod: action.payload,
+        },
+      };
     default:
       return state;
   }

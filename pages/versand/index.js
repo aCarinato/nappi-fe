@@ -6,13 +6,13 @@ import CheckoutWizard from '../../components/purchase/CheckoutWizard';
 import ShippingForm from '../../components/purchase/ShippingForm';
 import UserRoute from '../../components/routes/UserRoute';
 
-function ShippingPage() {
+function VersandPage() {
   const router = useRouter();
   const { locale } = router;
 
   useEffect(() => {
+    if (locale === 'en') router.push('/shipping');
     if (locale === 'it') router.push('/spedizione');
-    if (locale === 'de') router.push('/versand');
   }, [locale]);
 
   return (
@@ -23,4 +23,4 @@ function ShippingPage() {
   );
 }
 
-export default ShippingPage;
+export default VersandPage;

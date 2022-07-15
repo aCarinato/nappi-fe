@@ -1,0 +1,48 @@
+.container {
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), 0 1px 12px 2px rgba(0, 0, 0, 0.2);
+  border-radius: 0.5rem;
+  text-align: center;
+  margin-top: 1.5rem;
+  padding-bottom: 0.5rem;
+}
+
+.form-container {
+  margin-bottom: 1rem;
+}
+
+.field {
+  padding: 1rem 0;
+}
+
+.label {
+  display: block;
+}
+
+.input {
+  display: block;
+  width: 90%;
+  margin: auto;
+}
+
+.CTA-wrapper {
+  margin: 0.5rem auto;
+  width: 75%;
+}
+
+.spanLink {
+  font-weight: bold;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+@media (min-width: 768px) {
+  .container {
+    margin: 1rem auto;
+    width: 50%;
+  }
+
+  .CTA-wrapper {
+    margin: auto;
+    width: 50%;
+  }
+}

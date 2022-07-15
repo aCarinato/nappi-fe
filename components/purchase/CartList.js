@@ -5,6 +5,8 @@ import { useRouter } from 'next/router';
 import { Icon } from '@iconify/react';
 // Custom components
 import BtnCTA from '../UI/BtnCTA';
+// context
+import { useMainContext } from '../../context/Context';
 
 // import dynamic from 'next/dynamic';
 
@@ -13,6 +15,18 @@ function CartList(props) {
   const { locale } = router;
 
   const { items, removeItem, updateItem } = props;
+
+  const { authState } = useMainContext();
+
+  const checkoutHandler = () => {
+    if (authState !== null && authState.token !== '') {
+      if (locale === 'en') router.push('/shipping');
+      if (locale === 'it') router.push('/spedizione');
+      if (locale === 'de') router.push('/versand');
+    } else {
+      router.push('/login');
+    }
+  };
 
   return (
     <div className={classes['main-container-flex']}>
@@ -79,7 +93,7 @@ function CartList(props) {
         <div>
           <BtnCTA
             label="Check Out"
-            onCLickAction={() => router.push('login?redirect=/shipping')}
+            onCLickAction={checkoutHandler}
             icon={true}
             iconType="bi:cart"
           />
