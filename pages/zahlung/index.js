@@ -1,15 +1,16 @@
-import { useRouter } from 'next/router';
-import { useEffect } from 'react';
 import CheckoutWizard from '../../components/purchase/CheckoutWizard';
 import PaymentSelectionForm from '../../components/purchase/PaymentSelectionForm';
 import UserRoute from '../../components/routes/UserRoute';
+// hooks
+import { useRouter } from 'next/router';
+import { useEffect } from 'react';
 
-function PaymentPage() {
+function ZahlungPage() {
   const router = useRouter();
   const { locale } = router;
 
   useEffect(() => {
-    if (locale === 'de') router.push('/zahlung');
+    if (locale === 'en') router.push('/payment');
     if (locale === 'it') router.push('/pagamento');
   }, [locale]);
 
@@ -21,4 +22,4 @@ function PaymentPage() {
   );
 }
 
-export default PaymentPage;
+export default ZahlungPage;

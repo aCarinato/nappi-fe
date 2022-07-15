@@ -40,6 +40,8 @@ function PaymentSelectionForm() {
       'nappi-cart',
       JSON.stringify({ ...cart, paymentMethod: selectedMethod })
     );
+
+    router.push('/place-order');
   };
 
   useEffect(() => {
@@ -74,9 +76,6 @@ function PaymentSelectionForm() {
               id={payment}
               checked={selectedMethod === payment}
               onChange={() => setSelectedMethod(payment)}
-              // value="dioo"
-              // required
-              // ref={emailInputRef}
             />
           </div>
         ))}

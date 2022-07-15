@@ -75,7 +75,9 @@ function ShippingForm() {
       })
     );
 
-    router.push('/payment');
+    if (locale === 'en') router.push('/payment');
+    if (locale === 'it') router.push('/pagamento');
+    if (locale === 'de') router.push('/zahlung');
   };
 
   return (
