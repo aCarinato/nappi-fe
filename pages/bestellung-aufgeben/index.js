@@ -6,22 +6,26 @@ import UserRoute from '../../components/routes/UserRoute';
 import PurchaseSummary from '../../components/purchase/PurchaseSummary';
 // context
 import { Store } from '../../context/Store';
+import { useMainContext } from '../../context/Context';
+// libraries
 import { useRouter } from 'next/router';
 import axios from 'axios';
-import { useMainContext } from '../../context/Context';
 
-function PlaceOrderPage() {
+function BestellungAufgebenPage() {
   const { authState } = useMainContext();
   const { state, dispatch } = useContext(Store);
   const { cart } = state;
   const { cartItems, shippingAddress, paymentMethod } = cart;
 
+  // console.log('CART: ');
+  // console.log(cart);
+
   // Switch language
   const router = useRouter();
   const { locale } = router;
   useEffect(() => {
+    if (locale === 'en') router.push('/place-order');
     if (locale === 'it') router.push('/completa-ordine');
-    if (locale === 'de') router.push('/bestellung-aufgeben');
   }, [locale]);
 
   // function to round to 2 decimals
@@ -89,16 +93,16 @@ function PlaceOrderPage() {
   return (
     <UserRoute>
       <CheckoutWizard activeStep={3} />
-      <h1>Place Order</h1>
+      <h1>Bestellung aufgeben</h1>
       <br></br>
       {cartItems.length === 0 ? (
         <div>
-          Cart is empty. <Link href="/">Go to shopping</Link>
+          Il carrello è vuoto. <Link href="/">Vai agli articoli.</Link>
         </div>
       ) : (
         <div>
           <div>
-            <h2>Shipping Address</h2>
+            <h2>Lieferanschrift</h2>
             <div>
               {shippingAddress.fullName}, {shippingAddress.address}{' '}
               {shippingAddress.city}, {shippingAddress.postalCode}{' '}
@@ -111,7 +115,7 @@ function PlaceOrderPage() {
 
           <br></br>
           <div>
-            <h2>Payment Method</h2>
+            <h2>Zahlungsmethode</h2>
             <div>{paymentMethod}</div>
             <div>
               <Link href="/payment">Edit</Link>
@@ -119,7 +123,7 @@ function PlaceOrderPage() {
           </div>
           <br></br>
           <div>
-            <h2>SHOPPING CART SUMMARY (TO ADD HERE)</h2>
+            <h2>RIASSUNTO CARRELLO (TO ADD HERE)</h2>
           </div>
           <br></br>
           <PurchaseSummary
@@ -135,4 +139,4 @@ function PlaceOrderPage() {
   );
 }
 
-export default PlaceOrderPage;
+export default BestellungAufgebenPage;

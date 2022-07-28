@@ -41,7 +41,9 @@ function PaymentSelectionForm() {
       JSON.stringify({ ...cart, paymentMethod: selectedMethod })
     );
 
-    router.push('/place-order');
+    if (locale === 'en') router.push('/place-order');
+    if (locale === 'it') router.push('/completa-ordine');
+    if (locale === 'de') router.push('/bestellung-aufgeben');
   };
 
   useEffect(() => {
@@ -84,7 +86,11 @@ function PaymentSelectionForm() {
           <BtnCTA
             type="submit"
             label={
-              locale === 'en' ? 'Login' : locale === 'it' ? 'Login' : 'Login'
+              locale === 'en'
+                ? 'Next'
+                : locale === 'it'
+                ? 'Continua'
+                : 'Nächste'
             }
             // onCLickAction={loginHandler}
           />
