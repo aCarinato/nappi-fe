@@ -2,7 +2,9 @@ import { createContext, useEffect, useReducer, useState } from 'react';
 
 export const Store = createContext();
 
-const initialState = { cart: { cartItems: [], shippingAddress: {} } };
+const initialState = {
+  cart: { cartItems: [], shippingAddress: {}, paymentMethod: '' },
+};
 // The next doesn't work
 // const initialState = {
 //   cart: localStorage.getItem('nappi-cart')
@@ -13,8 +15,10 @@ const initialState = { cart: { cartItems: [], shippingAddress: {} } };
 function reducer(state, action) {
   switch (action.type) {
     case 'CART_LOCALSTORAGE': {
-      const cartItems = action.payload;
-      return { ...state, cart: { ...cartItems } };
+      // const cartItems = action.payload;
+      // return { ...state, cart: { ...cartItems } };
+      const cartData = action.payload;
+      return { ...state, cart: cartData };
     }
     case 'CART_ADD_ITEM': {
       const newItem = action.payload;
@@ -45,6 +49,22 @@ function reducer(state, action) {
       );
       return { ...state, cart: { ...state.cart, cartItems } };
     }
+    case 'CART_RESET': {
+      return {
+        ...state,
+        cart: {
+          cartItems: [],
+          shippingAddress: { location: {} },
+          paymentMethod: '',
+        },
+      };
+    }
+    case 'CART_CLEAR_ITEMS': {
+      return {
+        ...state,
+        cart: { ...state.cart, cartItems: [] },
+      };
+    }
     case 'SAVE_SHIPPING_ADDRESS':
       return {
         ...state,
@@ -74,9 +94,14 @@ export function StoreProvider({ children }) {
   const value = { state, dispatch };
 
   useEffect(() => {
-    const storedCart = JSON.parse(localStorage.getItem('nappi-cart'));
-    if (storedCart !== null) {
-      dispatch({ type: 'CART_LOCALSTORAGE', payload: storedCart });
+    // const storedCart = JSON.parse(localStorage.getItem('nappi-cart'));
+
+    const storedData = JSON.parse(localStorage.getItem('nappi-cart'));
+
+    // if (storedCart !== null) {
+    // dispatch({ type: 'CART_LOCALSTORAGE', payload: storedCart });
+    if (storedData !== null) {
+      dispatch({ type: 'CART_LOCALSTORAGE', payload: storedData });
     }
   }, []);
 
