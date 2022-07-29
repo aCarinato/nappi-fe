@@ -47,7 +47,6 @@ function PlaceOrderPage() {
 
   const placeOrderHandler = async () => {
     try {
-      // console.log('DAIIII');
       setLoading(true);
       console.log(cartItems);
       const { data } = await axios.post(
@@ -79,7 +78,7 @@ function PlaceOrderPage() {
       );
 
       // console.log(data);
-      // router.push(`/order/${data._id}`);
+      router.push(`/orders/${data._id}`);
     } catch (err) {
       setLoading(false);
       console.log('ERRORR');
