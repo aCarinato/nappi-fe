@@ -4,6 +4,8 @@ import Link from 'next/link';
 import Image from 'next/image';
 import classes from './OrderSummary.module.css';
 
+import { PayPalButtons, usePayPalScriptReducer } from '@paypal/react-paypal-js';
+
 function OrderSummary(props) {
   const {
     shippingAddress,
@@ -17,6 +19,11 @@ function OrderSummary(props) {
     taxPrice,
     shippingPrice,
     totalPrice,
+    isPending,
+    loadingPay,
+    createOrder,
+    onApprove,
+    onError,
   } = props;
 
   const { locale } = useRouter();
@@ -131,6 +138,35 @@ function OrderSummary(props) {
                 <div>${totalPrice}</div>
               </div>
             </li>
+            {!isPaid && (
+              // <div>ORDINE NON PAGATO!!</div>
+              <li>
+                {isPending ? (
+                  <div>Loading...</div>
+                ) : (
+                  <div>
+                    <PayPalButtons
+                      createOrder={createOrder}
+                      onApprove={onApprove}
+                      onError={onError}
+                    ></PayPalButtons>
+                  </div>
+                )}
+                {loadingPay && <div>Loading...</div>}
+              </li>
+            )}
+            {isPaid && (
+              <div>
+                <h2>
+                  {' '}
+                  {locale === 'en'
+                    ? 'Order is paid'
+                    : locale === 'it'
+                    ? 'Ordine pagato'
+                    : 'Bestellung ist bezahlt'}
+                </h2>
+              </div>
+            )}
           </ul>
         </div>
       </div>

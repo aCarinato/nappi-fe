@@ -3,6 +3,9 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 
 import BtnCTA from '../UI/BtnCTA';
+// context
+import { Store } from '../../context/Store';
+import { useContext } from 'react';
 
 function ProductItem(props) {
   const { product } = props;
@@ -10,8 +13,20 @@ function ProductItem(props) {
   const router = useRouter();
   const { locale } = router;
 
+  const { state, dispatch } = useContext(Store);
+
   const addToCartHandler = () => {
-    // console.log('')
+    const existItem = state.cart.cartItems.find((x) => x._id === product._id);
+    const quantity = existItem ? existItem.quantity + 1 : 1;
+
+    if (product.countInStock < quantity) {
+      if (locale === 'en') alert('Sorry. Product out of stock');
+      if (locale === 'it') alert('Prodotto esaurito');
+      if (locale === 'de') alert('Es tut uns leid. Produkt nicht auf Lager');
+      return;
+    }
+
+    dispatch({ type: 'CART_ADD_ITEM', payload: { ...product, quantity } });
   };
 
   return (
