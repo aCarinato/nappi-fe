@@ -7,23 +7,7 @@ import { useMainContext } from '../../context/Context';
 import OrderSummary from '../../components/purchase/OrderSummary';
 import { usePayPalScriptReducer } from '@paypal/react-paypal-js';
 
-// function reducer(state, action) {
-//   switch (action.type) {
-//     case 'FETCH_REQUEST': {
-//       return { ...state, loading: true, error: '' };
-//     }
-//     case 'FETCH_SUCCESS': {
-//       return { ...state, loading: false, order: action.payload, error: '' };
-//     }
-//     case 'FETCH_FAIL': {
-//       return { ...state, loading: false, error: action.payload };
-//     }
-//     default:
-//       state;
-//   }
-// }
-
-function OrderPage() {
+function BestellenPage() {
   const { authState } = useMainContext();
   const { query } = useRouter();
   const orderId = query.id;
@@ -135,12 +119,12 @@ function OrderPage() {
     }
   }, [orderId, successPay]);
 
-  //   MULTI LANGUAGE
+  // MULTI LANGUAGE
   const router = useRouter();
   const { locale } = router;
   useEffect(() => {
+    if (locale === 'en') router.push(`/orders/${orderId}`);
     if (locale === 'it') router.push(`/ordini/${orderId}`);
-    if (locale === 'de') router.push(`/bestellen/${orderId}`);
   }, [locale]);
 
   //   const [{ loading, error, order }, dispatch] = useReducer(reducer, {
@@ -151,7 +135,7 @@ function OrderPage() {
 
   return (
     <UserRoute>
-      <h1>Order: {orderId}</h1>
+      <h1>Bestellen: {orderId}</h1>
       <br></br>
       {loading ? (
         <div>Loading...</div>
@@ -182,4 +166,4 @@ function OrderPage() {
   );
 }
 
-export default OrderPage;
+export default BestellenPage;

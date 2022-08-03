@@ -35,13 +35,13 @@ function PlaceOrderPage() {
   const taxPrice = round2(itemsPrice * 0.15);
   const totalPrice = round2(itemsPrice + shippingPrice + taxPrice);
 
-  useEffect(() => {
-    console.log(paymentMethod);
-    if (paymentMethod === '') {
-      // router.push('/payment');
-      console.log('NIENTEEE');
-    }
-  }, [paymentMethod]);
+  // useEffect(() => {
+  //   console.log(paymentMethod);
+  //   if (paymentMethod === '') {
+  //     // router.push('/payment');
+  //     console.log('NIENTEEE');
+  //   }
+  // }, [paymentMethod]);
 
   const [loading, setLoading] = useState();
 
@@ -78,7 +78,9 @@ function PlaceOrderPage() {
       );
 
       // console.log(data);
-      router.push(`/orders/${data._id}`);
+      if (locale === 'en') router.push(`/orders/${data._id}`);
+      if (locale === 'it') router.push(`/ordini/${data._id}`);
+      if (locale === 'de') router.push(`/bestellen/${data._id}`);
     } catch (err) {
       setLoading(false);
       console.log('ERRORR');

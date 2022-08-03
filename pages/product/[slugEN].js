@@ -14,7 +14,7 @@ function ProductPageEN() {
   const { locale, query } = router;
   const { slugEN } = query;
 
-  console.log(query);
+  // console.log(query);
 
   const fetchProduct = async () => {
     try {

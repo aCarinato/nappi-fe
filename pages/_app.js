@@ -5,6 +5,7 @@ import Layout from '../components/layout/Layout';
 
 import { ContextProvider } from '../context/Context';
 import { StoreProvider } from '../context/Store';
+import { PayPalScriptProvider } from '@paypal/react-paypal-js';
 
 function MyApp({ Component, pageProps }) {
   return (
@@ -18,7 +19,9 @@ function MyApp({ Component, pageProps }) {
               content="Olio extra vergine di oliva pugliese"
             />
           </Head>
-          <Component {...pageProps} />
+          <PayPalScriptProvider>
+            <Component {...pageProps} />
+          </PayPalScriptProvider>
         </Layout>
       </StoreProvider>
     </ContextProvider>
