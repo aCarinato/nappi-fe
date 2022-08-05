@@ -17,14 +17,11 @@ import {
 // load stripe outside component render
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY);
 
-function OrdersStrpPage() {
+function OrdiniStrpPage() {
   //
   const { authState } = useMainContext();
   const { query } = useRouter();
   const orderId = query.id;
-
-  // load stripe outside component render
-  const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY);
 
   const [totalPrice, setTotalPrice] = useState(0);
   const [loading, setLoading] = useState(null);
@@ -60,19 +57,19 @@ function OrdersStrpPage() {
   const router = useRouter();
   const { locale } = router;
   useEffect(() => {
-    if (locale === 'it') router.push(`/ordini-strp/${orderId}`);
+    if (locale === 'en') router.push(`/orders-strp/${orderId}`);
     if (locale === 'de') router.push(`/bestellen-strp/${orderId}`);
   }, [locale]);
 
   return (
     <UserRoute>
-      <h1>Stripe payment</h1>
+      <h1>Pagamento con stripe</h1>
       <Elements stripe={stripePromise}>
-        <div>COMPLETE YOUR PURCHASE</div>
+        <div>COMPLETA IL TUO ACQUISTO</div>
         {!loading && <StripeCheckout totalPrice={totalPrice} />}
       </Elements>
     </UserRoute>
   );
 }
 
-export default OrdersStrpPage;
+export default OrdiniStrpPage;

@@ -8,7 +8,9 @@ import {
 import axios from 'axios';
 import { useMainContext } from '../../context/Context';
 
-function StripeCheckout() {
+function StripeCheckout(props) {
+  const { totalPrice } = props;
+
   const { authState } = useMainContext();
 
   const [succeeded, setSucceeded] = useState(false);
@@ -17,10 +19,16 @@ function StripeCheckout() {
   const [error, setError] = useState(null);
   const [clientSecret, setClientSecret] = useState('');
 
+  //   const [totalPrice, setTotalPrice] = useState(0);
+
+  //   useEffect(() => {
+  //     fetchOrder();
+  //   }, []);
+
   const createPaymentIntent = async () => {
     const res = await axios.post(
       `${process.env.NEXT_PUBLIC_API}/stripe/create-payment-intent`,
-      {},
+      { totalPrice },
       {
         headers: {
           Authorization: `Bearer ${authState.token}`,
@@ -60,7 +68,7 @@ function StripeCheckout() {
     } else {
       // save order in the database
       // empty cart
-      console.log(JSON.stringify(payload, null, 4));
+      // console.log(JSON.stringify(payload, null, 4));
       setError(null);
       setProcessing(false);
       setSucceeded(true);
@@ -68,6 +76,7 @@ function StripeCheckout() {
   };
 
   useEffect(() => {
+    // fetchOrder();
     createPaymentIntent()
       .then((res) => {
         // console.log('create payment intent');

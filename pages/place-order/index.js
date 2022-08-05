@@ -48,7 +48,7 @@ function PlaceOrderPage() {
   const placeOrderHandler = async () => {
     try {
       setLoading(true);
-      console.log(cartItems);
+      // console.log(cartItems);
       const { data } = await axios.post(
         `${process.env.NEXT_PUBLIC_API}/order/place-order`,
         {
