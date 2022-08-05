@@ -39,13 +39,13 @@ function BestellungAufgebenPage() {
   const taxPrice = round2(itemsPrice * 0.15);
   const totalPrice = round2(itemsPrice + shippingPrice + taxPrice);
 
-  useEffect(() => {
-    console.log(paymentMethod);
-    if (paymentMethod === '') {
-      // router.push('/payment');
-      console.log('NIENTEEE');
-    }
-  }, [paymentMethod]);
+  // useEffect(() => {
+  //   console.log(paymentMethod);
+  //   if (paymentMethod === '') {
+  //     // router.push('/payment');
+  //     console.log('NIENTEEE');
+  //   }
+  // }, [paymentMethod]);
 
   const [loading, setLoading] = useState();
 
@@ -53,7 +53,7 @@ function BestellungAufgebenPage() {
     try {
       // console.log('DAIIII');
       setLoading(true);
-      console.log(cartItems);
+      // console.log(cartItems);
       const { data } = await axios.post(
         `${process.env.NEXT_PUBLIC_API}/order/place-order`,
         {
