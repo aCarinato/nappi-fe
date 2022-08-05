@@ -84,9 +84,17 @@ function BestellungAufgebenPage() {
 
       // console.log(data);
       // router.push(`/order/${data._id}`);
-      if (locale === 'en') router.push(`/orders/${data._id}`);
-      if (locale === 'it') router.push(`/ordini/${data._id}`);
-      if (locale === 'de') router.push(`/bestellen/${data._id}`);
+      if (paymentMethod === 'Paypal') {
+        if (locale === 'en') router.push(`/orders/${data._id}`);
+        if (locale === 'it') router.push(`/ordini/${data._id}`);
+        if (locale === 'de') router.push(`/bestellen/${data._id}`);
+      }
+
+      if (paymentMethod === 'Stripe') {
+        if (locale === 'en') router.push(`/orders-strp/${data._id}`);
+        if (locale === 'it') router.push(`/ordini-strp/${data._id}`);
+        if (locale === 'de') router.push(`/bestellen-strp/${data._id}`);
+      }
     } catch (err) {
       setLoading(false);
       console.log('ERRORR');
