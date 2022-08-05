@@ -61,10 +61,14 @@ function BestellenStrpPage() {
     if (locale === 'it') router.push(`/ordini-strp/${orderId}`);
   }, [locale]);
 
+  const options = {
+    locale: locale,
+  };
+
   return (
     <UserRoute>
       <h1>Betalen met stripe - DE</h1>
-      <Elements stripe={stripePromise}>
+      <Elements stripe={stripePromise} options={options}>
         <div>JOUW AANKOOP - DE</div>
         {!loading && <StripeCheckout totalPrice={totalPrice} />}
       </Elements>

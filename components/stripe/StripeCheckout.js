@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import {
   CardElement,
   //   Elements,
+  // IdealBankElement,
   useStripe,
   useElements,
 } from '@stripe/react-stripe-js';
@@ -98,6 +99,7 @@ function StripeCheckout(props) {
       StripeCheckout
       <form onSubmit={handleSubmit}>
         <CardElement onChange={handleChange} />
+        {/* <IdealBankElement /> */}
         <button disabled={disabled}>Pay</button>
       </form>
       {error && <div>{error}</div>}
