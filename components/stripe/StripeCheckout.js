@@ -10,7 +10,7 @@ import axios from 'axios';
 import { useMainContext } from '../../context/Context';
 
 function StripeCheckout(props) {
-  const { totalPrice } = props;
+  const { totalPrice, orderId } = props;
 
   const { authState } = useMainContext();
 
@@ -70,6 +70,15 @@ function StripeCheckout(props) {
       // save order in the database
       // empty cart
       // console.log(JSON.stringify(payload, null, 4));
+      const res = await axios.put(
+        `${process.env.NEXT_PUBLIC_API}/order/${orderId}/pay`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${authState.token}`,
+          },
+        }
+      );
       setError(null);
       setProcessing(false);
       setSucceeded(true);
@@ -102,6 +111,7 @@ function StripeCheckout(props) {
         {/* <IdealBankElement /> */}
         <button disabled={disabled}>Pay</button>
       </form>
+      {processing && <div>Processing payment...</div>}
       {error && <div>{error}</div>}
       {succeeded && <div>Payment successful</div>}
     </div>

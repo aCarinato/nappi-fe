@@ -70,7 +70,9 @@ function BestellenStrpPage() {
       <h1>Betalen met stripe - DE</h1>
       <Elements stripe={stripePromise} options={options}>
         <div>JOUW AANKOOP - DE</div>
-        {!loading && <StripeCheckout totalPrice={totalPrice} />}
+        {!loading && (
+          <StripeCheckout orderId={orderId} totalPrice={totalPrice} />
+        )}
       </Elements>
     </UserRoute>
   );

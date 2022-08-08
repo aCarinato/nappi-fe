@@ -70,7 +70,9 @@ function OrdiniStrpPage() {
       <h1>Pagamento con stripe</h1>
       <Elements stripe={stripePromise} options={options}>
         <div>COMPLETA IL TUO ACQUISTO</div>
-        {!loading && <StripeCheckout totalPrice={totalPrice} />}
+        {!loading && (
+          <StripeCheckout orderId={orderId} totalPrice={totalPrice} />
+        )}
       </Elements>
     </UserRoute>
   );
