@@ -23,9 +23,6 @@ function OrdersStrpPage() {
   const { query } = useRouter();
   const orderId = query.id;
 
-  // load stripe outside component render
-  const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY);
-
   const [totalPrice, setTotalPrice] = useState(0);
   const [loading, setLoading] = useState(null);
 
