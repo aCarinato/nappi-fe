@@ -36,7 +36,7 @@ function LoginForm(props) {
         loggingUser
       );
 
-      console.log(res);
+      // console.log(res);
 
       if (res.data.error) {
         // setShowError(true);
