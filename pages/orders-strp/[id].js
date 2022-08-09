@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 // own components
 import UserRoute from '../../components/routes/UserRoute';
 import { useMainContext } from '../../context/Context';
@@ -22,7 +22,7 @@ function OrdersStrpPage() {
   const { authState } = useMainContext();
   const { query } = useRouter();
   const orderId = query.id;
-
+  const [order, setOrder] = useState(null);
   const [totalPrice, setTotalPrice] = useState(0);
   const [loading, setLoading] = useState(null);
 
@@ -39,10 +39,10 @@ function OrdersStrpPage() {
         }
       );
 
-      //   console.log(data.totalPrice);
+      //   console.log(data);
       setTotalPrice(data.totalPrice);
 
-      //   setOrder(data);
+      setOrder(data);
       setLoading(false);
     } catch (err) {
       console.log(err);
@@ -67,13 +67,19 @@ function OrdersStrpPage() {
 
   return (
     <UserRoute>
-      <h1>Stripe payment</h1>
-      <Elements stripe={stripePromise} options={options}>
-        <div>COMPLETE YOUR PURCHASE</div>
-        {!loading && (
-          <StripeCheckout orderId={orderId} totalPrice={totalPrice} />
-        )}
-      </Elements>
+      {order && order.isPaid ? (
+        <div>Order is paid</div>
+      ) : (
+        <Fragment>
+          <h1>Stripe payment</h1>
+          <Elements stripe={stripePromise} options={options}>
+            <div>COMPLETE YOUR PURCHASE</div>
+            {!loading && (
+              <StripeCheckout orderId={orderId} totalPrice={totalPrice} />
+            )}
+          </Elements>
+        </Fragment>
+      )}
     </UserRoute>
   );
 }

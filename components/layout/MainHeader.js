@@ -56,7 +56,9 @@ function MainHeader() {
   };
 
   const goToHistoryHandler = () => {
-    console.log('order history');
+    if (locale === 'en') router.push('/order-history');
+    if (locale === 'it') router.push(`/storia-ordini`);
+    if (locale === 'de') router.push(`/bestellverlauf`);
     setProfileMenuOpen(false);
   };
 
@@ -73,7 +75,15 @@ function MainHeader() {
         locale === 'en' ? 'Profile' : locale === 'it' ? 'Profilo' : 'Profil',
       action: goToProfileHandler,
     },
-    { name: 'Order History', action: goToHistoryHandler },
+    {
+      name:
+        locale === 'en'
+          ? 'Order History'
+          : locale === 'it'
+          ? 'Ordini'
+          : 'Bestellverlauf',
+      action: goToHistoryHandler,
+    },
     { name: 'Logout', action: logoutHandler },
   ];
 

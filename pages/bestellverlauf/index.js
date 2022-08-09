@@ -6,7 +6,7 @@ import Link from 'next/link';
 import UserRoute from '../../components/routes/UserRoute';
 import { useMainContext } from '../../context/Context';
 
-function OrderHistoryPage() {
+function BestellverlaufPage() {
   const { authState } = useMainContext();
 
   const [orders, setOrders] = useState([]);
@@ -46,24 +46,24 @@ function OrderHistoryPage() {
   const { locale } = router;
   useEffect(() => {
     if (locale === 'it') router.push(`/storia-ordini`);
-    if (locale === 'de') router.push(`/bestellverlauf`);
+    if (locale === 'en') router.push(`/order-history`);
   }, [locale]);
 
   return (
     <UserRoute>
-      <h1>Order History</h1>
+      <h1>Bestellverlauf</h1>
       {loading ? (
-        <div>Loading orders...</div>
+        <div>LADEAUFTRÄGE...</div>
       ) : (
         <div>
           <table>
             <thead>
               <tr>
                 <th>ID</th>
-                <th>DATE</th>
-                <th>TOTAL</th>
-                <th>PAID</th>
-                <th>DELIVERED</th>
+                <th>DATUM</th>
+                <th>GESAMT</th>
+                <th>BEZAHLT</th>
+                <th>GELIEFERT</th>
                 <th>ACTION</th>
               </tr>
             </thead>
@@ -76,15 +76,15 @@ function OrderHistoryPage() {
                   <td>
                     {order.isPaid
                       ? `${order.paidAt.substring(0, 10)}`
-                      : `not paid`}
+                      : `nicht bezahlt`}
                   </td>
                   <td>
                     {order.isDelivered
                       ? `${order.deliveredAt.substring(0, 10)}`
-                      : `not delivered`}
+                      : `niet geliefert`}
                   </td>
                   <td>
-                    <Link href={`/orders-strp/${order._id}`} passHref>
+                    <Link href={`/bestellen-strp/${order._id}`} passHref>
                       <a>Details</a>
                     </Link>
                   </td>
@@ -98,4 +98,4 @@ function OrderHistoryPage() {
   );
 }
 
-export default OrderHistoryPage;
+export default BestellverlaufPage;

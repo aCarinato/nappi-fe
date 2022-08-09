@@ -6,7 +6,7 @@ import Link from 'next/link';
 import UserRoute from '../../components/routes/UserRoute';
 import { useMainContext } from '../../context/Context';
 
-function OrderHistoryPage() {
+function StoriaOrdiniPage() {
   const { authState } = useMainContext();
 
   const [orders, setOrders] = useState([]);
@@ -45,26 +45,26 @@ function OrderHistoryPage() {
   const router = useRouter();
   const { locale } = router;
   useEffect(() => {
-    if (locale === 'it') router.push(`/storia-ordini`);
+    if (locale === 'en') router.push(`/order-history`);
     if (locale === 'de') router.push(`/bestellverlauf`);
   }, [locale]);
 
   return (
     <UserRoute>
-      <h1>Order History</h1>
+      <h1>Ordini</h1>
       {loading ? (
-        <div>Loading orders...</div>
+        <div>Caricamento ordini...</div>
       ) : (
         <div>
           <table>
             <thead>
               <tr>
                 <th>ID</th>
-                <th>DATE</th>
-                <th>TOTAL</th>
-                <th>PAID</th>
-                <th>DELIVERED</th>
-                <th>ACTION</th>
+                <th>DATA</th>
+                <th>TOTALE</th>
+                <th>PAGATO</th>
+                <th>CONSEGNATO</th>
+                <th>AZIONE</th>
               </tr>
             </thead>
             <tbody>
@@ -76,15 +76,15 @@ function OrderHistoryPage() {
                   <td>
                     {order.isPaid
                       ? `${order.paidAt.substring(0, 10)}`
-                      : `not paid`}
+                      : `non pagato`}
                   </td>
                   <td>
                     {order.isDelivered
                       ? `${order.deliveredAt.substring(0, 10)}`
-                      : `not delivered`}
+                      : `non consegnato`}
                   </td>
                   <td>
-                    <Link href={`/orders-strp/${order._id}`} passHref>
+                    <Link href={`/ordini-strp/${order._id}`} passHref>
                       <a>Details</a>
                     </Link>
                   </td>
@@ -98,4 +98,4 @@ function OrderHistoryPage() {
   );
 }
 
-export default OrderHistoryPage;
+export default StoriaOrdiniPage;
