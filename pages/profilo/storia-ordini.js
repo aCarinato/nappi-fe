@@ -45,8 +45,8 @@ function StoriaOrdiniPage() {
   const router = useRouter();
   const { locale } = router;
   useEffect(() => {
-    if (locale === 'en') router.push(`/order-history`);
-    if (locale === 'de') router.push(`/bestellverlauf`);
+    if (locale === 'en') router.push(`/profile/order-history`);
+    if (locale === 'de') router.push(`/profil/bestellverlauf`);
   }, [locale]);
 
   return (

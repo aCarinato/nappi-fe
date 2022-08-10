@@ -55,12 +55,12 @@ function MainHeader() {
     setProfileMenuOpen(false);
   };
 
-  const goToHistoryHandler = () => {
-    if (locale === 'en') router.push('/order-history');
-    if (locale === 'it') router.push(`/storia-ordini`);
-    if (locale === 'de') router.push(`/bestellverlauf`);
-    setProfileMenuOpen(false);
-  };
+  // const goToHistoryHandler = () => {
+  //   if (locale === 'en') router.push('/order-history');
+  //   if (locale === 'it') router.push(`/storia-ordini`);
+  //   if (locale === 'de') router.push(`/bestellverlauf`);
+  //   setProfileMenuOpen(false);
+  // };
 
   const logoutHandler = () => {
     // console.log('logout');
@@ -75,15 +75,15 @@ function MainHeader() {
         locale === 'en' ? 'Profile' : locale === 'it' ? 'Profilo' : 'Profil',
       action: goToProfileHandler,
     },
-    {
-      name:
-        locale === 'en'
-          ? 'Order History'
-          : locale === 'it'
-          ? 'Ordini'
-          : 'Bestellverlauf',
-      action: goToHistoryHandler,
-    },
+    // {
+    //   name:
+    //     locale === 'en'
+    //       ? 'Order History'
+    //       : locale === 'it'
+    //       ? 'Ordini'
+    //       : 'Bestellverlauf',
+    //   action: goToHistoryHandler,
+    // },
     { name: 'Logout', action: logoutHandler },
   ];
 

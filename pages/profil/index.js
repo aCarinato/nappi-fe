@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { Fragment, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
+import Link from 'next/link';
 // own components
 import UserRoute from '../../components/routes/UserRoute';
 import SpinningLoader from '../../components/UI/SpinningLoader';
@@ -61,7 +62,15 @@ function ProfilPage() {
         <SpinningLoader />
       ) : (
         <UserRoute>
-          <div>Profil Pagina DE: {user.username}</div>
+          <div>Persönliche seite {user.username}</div>
+          <br></br>
+          <Link href={`/profil/bestellverlauf`} passHref>
+            <a>Meine Einkäufe</a>
+          </Link>
+          <br></br>
+          <Link href={`/profil/profil-bearbeiten`} passHref>
+            <a>Profil ändern</a>
+          </Link>
         </UserRoute>
       )}
     </Fragment>

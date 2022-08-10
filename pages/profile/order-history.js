@@ -6,7 +6,7 @@ import Link from 'next/link';
 import UserRoute from '../../components/routes/UserRoute';
 import { useMainContext } from '../../context/Context';
 
-function BestellverlaufPage() {
+function OrderHistoryPage() {
   const { authState } = useMainContext();
 
   const [orders, setOrders] = useState([]);
@@ -45,25 +45,25 @@ function BestellverlaufPage() {
   const router = useRouter();
   const { locale } = router;
   useEffect(() => {
-    if (locale === 'it') router.push(`/storia-ordini`);
-    if (locale === 'en') router.push(`/order-history`);
+    if (locale === 'it') router.push(`/profilo/storia-ordini`);
+    if (locale === 'de') router.push(`/profil/bestellverlauf`);
   }, [locale]);
 
   return (
     <UserRoute>
-      <h1>Bestellverlauf</h1>
+      <h1>Order History</h1>
       {loading ? (
-        <div>LADEAUFTRÄGE...</div>
+        <div>Loading orders...</div>
       ) : (
         <div>
           <table>
             <thead>
               <tr>
                 <th>ID</th>
-                <th>DATUM</th>
-                <th>GESAMT</th>
-                <th>BEZAHLT</th>
-                <th>GELIEFERT</th>
+                <th>DATE</th>
+                <th>TOTAL</th>
+                <th>PAID</th>
+                <th>DELIVERED</th>
                 <th>ACTION</th>
               </tr>
             </thead>
@@ -76,15 +76,15 @@ function BestellverlaufPage() {
                   <td>
                     {order.isPaid
                       ? `${order.paidAt.substring(0, 10)}`
-                      : `nicht bezahlt`}
+                      : `not paid`}
                   </td>
                   <td>
                     {order.isDelivered
                       ? `${order.deliveredAt.substring(0, 10)}`
-                      : `niet geliefert`}
+                      : `not delivered`}
                   </td>
                   <td>
-                    <Link href={`/bestellen-strp/${order._id}`} passHref>
+                    <Link href={`/orders-strp/${order._id}`} passHref>
                       <a>Details</a>
                     </Link>
                   </td>
@@ -98,4 +98,4 @@ function BestellverlaufPage() {
   );
 }
 
-export default BestellverlaufPage;
+export default OrderHistoryPage;
