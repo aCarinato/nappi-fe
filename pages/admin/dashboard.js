@@ -124,15 +124,15 @@ function AdminDashboard() {
           <>
             <div>AdminDashboard</div>
             <div>
-              <Link href="/ordini" passHref>
+              <Link href="/admin/ordini" passHref>
                 <a>Ordini</a>
               </Link>
               <br></br>
-              <Link href="/prodotti" passHref>
+              <Link href="/admin/prodotti" passHref>
                 <a>Prodotti</a>
               </Link>
               <br></br>
-              <Link href="/clienti" passHref>
+              <Link href="/admin/clienti" passHref>
                 <a>Clienti</a>
               </Link>
               <br></br>
