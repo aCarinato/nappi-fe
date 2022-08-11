@@ -8,6 +8,7 @@ import { Store } from '../../context/Store';
 import { useEffect, useRef, useState, useContext } from 'react';
 // own components
 import DropdownMenu from './DropdownMenu';
+import axios from 'axios';
 
 function MainHeader() {
   const router = useRouter();
@@ -25,6 +26,38 @@ function MainHeader() {
   const node = useRef();
   const nodeUser = useRef();
   // console.log(node);
+
+  // FETCHING THE USER
+  const [user, setUser] = useState({});
+  const [loading, setLoading] = useState(true);
+
+  const fetchUser = async () => {
+    try {
+      setLoading(true);
+      const { data } = await axios.get(
+        `${process.env.NEXT_PUBLIC_API}/auth/${authState.email}`
+      );
+      // console.log(data);
+      setUser(data);
+      setLoading(false);
+    } catch (err) {
+      console.log(err);
+    }
+    // router.push(`/profilo/${authState.username}`);
+    // console.log(user);
+  };
+
+  useEffect(() => {
+    let cancel = false;
+
+    if (authState !== null && authState.email && !cancel) {
+      fetchUser();
+    }
+
+    return () => {
+      cancel = true;
+    };
+  }, [authState]);
 
   // Track events outside scope
   const clickOutside = (e) => {
@@ -62,6 +95,10 @@ function MainHeader() {
   //   setProfileMenuOpen(false);
   // };
 
+  const goToAdminHandler = () => {
+    router.push('/admin/dashboard');
+  };
+
   const logoutHandler = () => {
     // console.log('logout');
     logout();
@@ -84,8 +121,12 @@ function MainHeader() {
     //       : 'Bestellverlauf',
     //   action: goToHistoryHandler,
     // },
+
     { name: 'Logout', action: logoutHandler },
   ];
+
+  user.isAdmin &&
+    profileMenuItems.push({ name: 'Admin', action: goToAdminHandler });
 
   // Do something after component renders
   useEffect(() => {
