@@ -4,10 +4,14 @@ import Link from 'next/link';
 import Image from 'next/image';
 import classes from './OrderSummary.module.css';
 
+import { useState } from 'react';
+
 import { PayPalButtons, usePayPalScriptReducer } from '@paypal/react-paypal-js';
+import axios from 'axios';
 
 function OrderSummary(props) {
   const {
+    id,
     shippingAddress,
     isDelivered,
     deliveredAt = '',
@@ -28,6 +32,24 @@ function OrderSummary(props) {
 
   const { locale } = useRouter();
 
+  // console.log(id);
+
+  // ORDER DELIVERY
+  const [loadingDeliver, setLoadingDeliver] = useState(false);
+  const deliverOrderHandler = async () => {
+    try {
+      setLoadingDeliver(true);
+      // const { data } = await axios.put(
+      //   `${process.env.NEXT_PUBLIC_API}/orders/${id}/deliver`,
+      //   {}
+      // );
+      // console.log(id);
+      setLoadingDeliver(false);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <Fragment>
       <div>
@@ -43,11 +65,6 @@ function OrderSummary(props) {
           {shippingAddress.city}, {shippingAddress.postalCode},{' '}
           {shippingAddress.country}
         </div>
-        {isDelivered ? (
-          <div>Delivered at {deliveredAt}</div>
-        ) : (
-          <div>Not delivered</div>
-        )}
       </div>
       <br></br>
       <div>
@@ -155,6 +172,7 @@ function OrderSummary(props) {
                 {loadingPay && <div>Loading...</div>}
               </li>
             )}
+            <br></br>
             {isPaid && (
               <div>
                 <h2>
@@ -167,7 +185,49 @@ function OrderSummary(props) {
                 </h2>
               </div>
             )}
+            <br></br>
+            {isDelivered ? (
+              <div>
+                <h2>
+                  {locale === 'en'
+                    ? 'Order is shipped / delivered'
+                    : locale === 'it'
+                    ? 'Ordine spedito / consegnato'
+                    : 'Bestellung ist verzenden'}
+                  Delivered at {deliveredAt}
+                </h2>{' '}
+              </div>
+            ) : (
+              <div>
+                <h2>
+                  {locale === 'en'
+                    ? 'Not shipped / delivered'
+                    : locale === 'it'
+                    ? 'Non spedito / consegnato'
+                    : 'Niet verzenden'}
+                </h2>{' '}
+              </div>
+            )}
           </ul>
+          {loadingDeliver ? (
+            <div>
+              {' '}
+              {locale === 'en'
+                ? 'Loading...'
+                : locale === 'it'
+                ? 'Caricamento...'
+                : 'Opladen...'}
+            </div>
+          ) : (
+            <button onClick={deliverOrderHandler}>
+              {' '}
+              {locale === 'en'
+                ? 'Deliver order'
+                : locale === 'it'
+                ? 'Consegna ordine'
+                : 'Verzenden bestell'}
+            </button>
+          )}
         </div>
       </div>
     </Fragment>

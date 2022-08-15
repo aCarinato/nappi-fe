@@ -142,6 +142,7 @@ function BestellenPage() {
       ) : (
         order && (
           <OrderSummary
+            id={orderId}
             shippingAddress={order.shippingAddress}
             isDelivered={order.isDelivered}
             deliveredAt={order.deliveredAt}

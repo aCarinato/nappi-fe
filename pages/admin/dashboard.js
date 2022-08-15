@@ -35,7 +35,7 @@ export const options = {
 };
 
 function AdminDashboard() {
-  const { authState } = useMainContext();
+  const { authState, adminState, logoutAdmin } = useMainContext();
 
   const router = useRouter();
 
@@ -115,63 +115,72 @@ function AdminDashboard() {
     }
   }, [summary]);
 
+  const logoutHandler = () => {
+    logoutAdmin();
+  };
+
   return (
     <Fragment>
       {loading ? (
         <div>Loading...</div>
-      ) : (
-        user.isAdmin && (
-          <>
-            <div>AdminDashboard</div>
-            <div>
-              <Link href="/admin/ordini" passHref>
-                <a>Ordini</a>
-              </Link>
-              <br></br>
-              <Link href="/admin/prodotti" passHref>
-                <a>Prodotti</a>
-              </Link>
-              <br></br>
-              <Link href="/admin/clienti" passHref>
-                <a>Clienti</a>
-              </Link>
-              <br></br>
-            </div>
+      ) : adminState !== null && adminState.isAdmin ? (
+        <>
+          <div>AdminDashboard</div>
+          <div>
+            <Link href="/admin/ordini" passHref>
+              <a>Ordini</a>
+            </Link>
             <br></br>
-            {loadingSummary ? (
-              <div>Caricando riassunto...</div>
-            ) : (
+            <Link href="/admin/prodotti" passHref>
+              <a>Prodotti</a>
+            </Link>
+            <br></br>
+            <Link href="/admin/clienti" passHref>
+              <a>Clienti</a>
+            </Link>
+            <br></br>
+          </div>
+          <br></br>
+          {loadingSummary ? (
+            <div>Caricando riassunto...</div>
+          ) : (
+            <div>
               <div>
-                <div>
-                  <p>EUR {summary.ordersPrice}</p>
-                  <p>Vendite</p>
-                  <Link href="admin/orders">Visualizza vendite</Link>
-                </div>
-                <div>
-                  <p>N. {summary.ordersCount}</p>
-                  <p>Ordini</p>
-                  <Link href="admin/orders">Vedi ordini</Link>
-                </div>
-                <div>
-                  <p>{summary.productsCount}</p>
-                  <p>Prodotti</p>
-                  <Link href="admin/products">Vedi prodotti</Link>
-                </div>
-                <div>
-                  <p>{summary.usersCount}</p>
-                  <p>Clienti</p>
-                  <Link href="admin/users">Vedi clienti</Link>
-                </div>
-                <br></br>
-                <h2>Sales chart</h2>
-                {/* <Bar
+                <p>EUR {summary.ordersPrice}</p>
+                <p>Vendite</p>
+                <Link href="admin/orders">Visualizza vendite</Link>
+              </div>
+              <div>
+                <p>N. {summary.ordersCount}</p>
+                <p>Ordini</p>
+                <Link href="admin/orders">Vedi ordini</Link>
+              </div>
+              <div>
+                <p>{summary.productsCount}</p>
+                <p>Prodotti</p>
+                <Link href="admin/products">Vedi prodotti</Link>
+              </div>
+              <div>
+                <p>{summary.usersCount}</p>
+                <p>Clienti</p>
+                <Link href="admin/users">Vedi clienti</Link>
+              </div>
+              <br></br>
+              <h2>Sales chart</h2>
+              {/* <Bar
                   options={{ legend: { display: true, position: 'right' } }}
                   data={chartData}
                 /> */}
-              </div>
-            )}
-          </>
-        )
+            </div>
+          )}
+          <br></br>
+          <button onClick={logoutHandler}>Logout</button>
+        </>
+      ) : (
+        <div>
+          Inserisci{' '}
+          <Link href="/amministratore">credenziali amministratore</Link>
+        </div>
       )}
     </Fragment>
   );
