@@ -84,7 +84,7 @@ function BestellverlaufPage() {
                       : `niet geliefert`}
                   </td>
                   <td>
-                    <Link href={`/bestellen-strp/${order._id}`} passHref>
+                    <Link href={`/bestellen/${order._id}`} passHref>
                       <a>Details</a>
                     </Link>
                   </td>

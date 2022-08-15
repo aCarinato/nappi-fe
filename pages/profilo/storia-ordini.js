@@ -84,7 +84,7 @@ function StoriaOrdiniPage() {
                       : `non consegnato`}
                   </td>
                   <td>
-                    <Link href={`/ordini-strp/${order._id}`} passHref>
+                    <Link href={`/ordini/${order._id}`} passHref>
                       <a>Details</a>
                     </Link>
                   </td>
