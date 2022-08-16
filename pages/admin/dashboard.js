@@ -15,6 +15,8 @@ import Link from 'next/link';
 import React, { Fragment, useEffect, useState } from 'react';
 // context
 import { useMainContext } from '../../context/Context';
+//
+import AdminRoute from '../../components/routes/AdminRoute';
 
 ChartJS.register(
   CategoryScale,
@@ -62,7 +64,7 @@ function AdminDashboard() {
   useEffect(() => {
     let cancel = false;
 
-    if (authState !== null && authState.email && !cancel) {
+    if (authState !== null && authState.token) {
       fetchUser();
     }
 
@@ -81,7 +83,12 @@ function AdminDashboard() {
     try {
       setLoadingSummary(true);
       const { data } = await axios.get(
-        `${process.env.NEXT_PUBLIC_API}/admin/summary`
+        `${process.env.NEXT_PUBLIC_API}/admin/summary`,
+        {
+          headers: {
+            Authorization: `Bearer ${authState.token}`,
+          },
+        }
       );
       //   console.log(data);
       setSummay(data);
@@ -92,8 +99,10 @@ function AdminDashboard() {
   };
 
   useEffect(() => {
-    fetchSummary();
-  }, []);
+    if (authState !== null && authState.token && authState.isAdmin)
+      fetchSummary();
+    // }, [authState.token && authState.isAdmin]);
+  }, [authState]);
 
   //  CHART
   const [chartData, setChartData] = useState({});
@@ -120,69 +129,66 @@ function AdminDashboard() {
   };
 
   return (
-    <Fragment>
-      {loading ? (
-        <div>Loading...</div>
-      ) : adminState !== null && adminState.isAdmin ? (
-        <>
-          <div>AdminDashboard</div>
-          <div>
-            <Link href="/admin/ordini" passHref>
-              <a>Ordini</a>
-            </Link>
-            <br></br>
-            <Link href="/admin/prodotti" passHref>
-              <a>Prodotti</a>
-            </Link>
-            <br></br>
-            <Link href="/admin/clienti" passHref>
-              <a>Clienti</a>
-            </Link>
-            <br></br>
-          </div>
-          <br></br>
-          {loadingSummary ? (
-            <div>Caricando riassunto...</div>
-          ) : (
+    <AdminRoute>
+      {
+        loading ? (
+          <div>Loading...</div>
+        ) : (
+          <>
+            <div>AdminDashboard</div>
             <div>
-              <div>
-                <p>EUR {summary.ordersPrice}</p>
-                <p>Vendite</p>
-                <Link href="admin/orders">Visualizza vendite</Link>
-              </div>
-              <div>
-                <p>N. {summary.ordersCount}</p>
-                <p>Ordini</p>
-                <Link href="admin/orders">Vedi ordini</Link>
-              </div>
-              <div>
-                <p>{summary.productsCount}</p>
-                <p>Prodotti</p>
-                <Link href="admin/products">Vedi prodotti</Link>
-              </div>
-              <div>
-                <p>{summary.usersCount}</p>
-                <p>Clienti</p>
-                <Link href="admin/users">Vedi clienti</Link>
-              </div>
+              <Link href="/admin/ordini" passHref>
+                <a>Ordini</a>
+              </Link>
               <br></br>
-              <h2>Sales chart</h2>
-              {/* <Bar
-                  options={{ legend: { display: true, position: 'right' } }}
-                  data={chartData}
-                /> */}
+              <Link href="/admin/prodotti" passHref>
+                <a>Prodotti</a>
+              </Link>
+              <br></br>
+              <Link href="/admin/clienti" passHref>
+                <a>Clienti</a>
+              </Link>
+              <br></br>
             </div>
-          )}
-          <br></br>
-          <button onClick={logoutHandler}>Logout</button>
-        </>
-      ) : (
-        <div>
-          Inserisci{' '}
-          <Link href="/amministratore">credenziali amministratore</Link>
-        </div>
-      )}
-    </Fragment>
+            <br></br>
+            {loadingSummary ? (
+              <div>Caricando riassunto...</div>
+            ) : (
+              <div>
+                <div>
+                  <p>EUR {summary.ordersPrice}</p>
+                  <p>Vendite</p>
+                  <Link href="admin/orders">Visualizza vendite</Link>
+                </div>
+                <div>
+                  <p>N. {summary.ordersCount}</p>
+                  <p>Ordini</p>
+                  <Link href="admin/orders">Vedi ordini</Link>
+                </div>
+                <div>
+                  <p>{summary.productsCount}</p>
+                  <p>Prodotti</p>
+                  <Link href="admin/products">Vedi prodotti</Link>
+                </div>
+                <div>
+                  <p>{summary.usersCount}</p>
+                  <p>Clienti</p>
+                  <Link href="admin/users">Vedi clienti</Link>
+                </div>
+              </div>
+            )}
+            {/* <br></br>
+          <button onClick={logoutHandler}>Logout</button> */}
+          </>
+        )
+        // : (
+        //   <div>
+        //     Inserisci{' '}
+        //     <Link href="/amministratore">credenziali amministratore</Link>
+        //   </div>
+        // )
+      }
+    </AdminRoute>
   );
 }
 

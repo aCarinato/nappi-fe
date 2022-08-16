@@ -23,6 +23,7 @@ export function ContextProvider({ children }) {
     username: '',
     email: '',
     token: '',
+    isAdmin: '',
   });
 
   // ADMIN AUTHENTICATION
@@ -39,9 +40,11 @@ export function ContextProvider({ children }) {
 
   // USER AUTH
 
-  const loginHandler = (username, email, token) => {
+  const loginHandler = (username, email, token, isAdmin) => {
     //  saves the credentials in local storage and in the state
     // localStorage.setItem('token', token);
+
+    console.log(username, email, token, isAdmin);
 
     localStorage.setItem(
       'nappi-user-auth',
@@ -49,6 +52,7 @@ export function ContextProvider({ children }) {
         username,
         token,
         email,
+        isAdmin,
       })
     );
 
@@ -56,6 +60,7 @@ export function ContextProvider({ children }) {
       username,
       token,
       email,
+      isAdmin,
     });
   };
 
@@ -66,6 +71,7 @@ export function ContextProvider({ children }) {
       username: '',
       email: '',
       token: '',
+      isAdmin: '',
     });
   };
 

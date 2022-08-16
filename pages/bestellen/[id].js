@@ -136,7 +136,7 @@ function BestellenPage() {
   }, [locale]);
 
   return (
-    <Fragment>
+    <UserRoute>
       {order ? (
         <Fragment>
           <OrderSummary
@@ -168,16 +168,6 @@ function BestellenPage() {
                 ? `Spedito il ${order.deliveredAt}`
                 : `Betaalt op ${order.deliveredAt}`}
             </div>
-          ) : adminState !== null && adminState.isAdmin ? (
-            <div>
-              <button onClick={deliverOrderHandler}>
-                {locale === 'en'
-                  ? 'Notify delivery'
-                  : locale === 'it'
-                  ? 'Notifica spedizione'
-                  : 'Betaalt op'}
-              </button>
-            </div>
           ) : (
             <div>
               {' '}
@@ -192,7 +182,7 @@ function BestellenPage() {
       ) : (
         <div>un cazzo</div>
       )}
-    </Fragment>
+    </UserRoute>
   );
 }
 

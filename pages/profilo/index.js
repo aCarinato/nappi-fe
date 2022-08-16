@@ -15,7 +15,7 @@ function ProfiloPage() {
 
   const [user, setUser] = useState({});
   const [loading, setLoading] = useState(true);
-
+  console.log(authState);
   const fetchUser = async () => {
     try {
       setLoading(true);

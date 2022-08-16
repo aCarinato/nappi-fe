@@ -150,7 +150,12 @@ function OrderPage() {
     try {
       const { data } = await axios.put(
         `${process.env.NEXT_PUBLIC_API}/admin/orders/${orderId}/deliver`,
-        {}
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${authState.token}`,
+          },
+        }
       );
 
       setOrderIsDelivered(true);
@@ -174,7 +179,7 @@ function OrderPage() {
   //   });
 
   return (
-    <Fragment>
+    <UserRoute>
       {order ? (
         <Fragment>
           <OrderSummary
@@ -206,16 +211,6 @@ function OrderPage() {
                 ? `Spedito il ${order.deliveredAt}`
                 : `Betaalt op ${order.deliveredAt}`}
             </div>
-          ) : adminState !== null && adminState.isAdmin ? (
-            <div>
-              <button onClick={deliverOrderHandler}>
-                {locale === 'en'
-                  ? 'Notify delivery'
-                  : locale === 'it'
-                  ? 'Notifica spedizione'
-                  : 'Betaalt op'}
-              </button>
-            </div>
           ) : (
             <div>
               {' '}
@@ -230,7 +225,7 @@ function OrderPage() {
       ) : (
         <div>un cazzo</div>
       )}
-    </Fragment>
+    </UserRoute>
   );
 }
 
