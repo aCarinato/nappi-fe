@@ -10,38 +10,40 @@ function AdminRoute({ children }) {
   // const { locale } = router;
   const { authState } = useMainContext();
 
-  useEffect(() => {
-    // let cancel = false;
-    if (authState && authState.token && authState.isAdmin) {
-      getCurrentUser();
-    } else {
-      router.push('/login');
-    }
-
-    // return () => {
-    //   cancel = true;
-    // };
-  }, [authState && authState.token && authState.isAdmin]);
-
   const getCurrentUser = async () => {
     try {
-      const { data } = await axios.get(
-        `${process.env.NEXT_PUBLIC_API}/auth/current-admin`,
-        {
-          headers: {
-            Authorization: `Bearer ${authState.token}`,
-          },
+      if (authState.token !== '') {
+        const { data } = await axios.get(
+          `${process.env.NEXT_PUBLIC_API}/admin/current-admin`,
+          {
+            headers: {
+              Authorization: `Bearer ${authState.token}`,
+            },
+          }
+        );
+        console.log(data);
+        if (data.ok) {
+          setOk(true);
+        } else {
         }
-      );
-      if (data.ok) {
-        setOk(true);
       } else {
         router.push('/login');
       }
     } catch (err) {
-      console.log(err);
+      // console.log(err);
+      router.push('/login');
     }
   };
+
+  useEffect(() => {
+    getCurrentUser();
+  }, []);
+
+  // useEffect(() => {
+  //   if (authState && authState.token) {
+  //     getCurrentUser();
+  //   }
+  // }, [authState && authState.token]);
 
   process.browser &&
     authState === null &&
