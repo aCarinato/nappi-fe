@@ -45,8 +45,8 @@ function BestellverlaufPage() {
   const router = useRouter();
   const { locale } = router;
   useEffect(() => {
-    if (locale === 'it') router.push(`/storia-ordini`);
-    if (locale === 'en') router.push(`/order-history`);
+    if (locale === 'it') router.push(`/profilo/storia-ordini`);
+    if (locale === 'en') router.push(`/profile/order-history`);
   }, [locale]);
 
   return (
@@ -84,7 +84,7 @@ function BestellverlaufPage() {
                       : `niet geliefert`}
                   </td>
                   <td>
-                    <Link href={`/bestellen-strp/${order._id}`} passHref>
+                    <Link href={`/bestellen/${order._id}`} passHref>
                       <a>Details</a>
                     </Link>
                   </td>

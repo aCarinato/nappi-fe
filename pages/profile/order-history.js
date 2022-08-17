@@ -45,8 +45,8 @@ function OrderHistoryPage() {
   const router = useRouter();
   const { locale } = router;
   useEffect(() => {
-    if (locale === 'it') router.push(`/storia-ordini`);
-    if (locale === 'de') router.push(`/bestellverlauf`);
+    if (locale === 'it') router.push(`/profilo/storia-ordini`);
+    if (locale === 'de') router.push(`/profil/bestellverlauf`);
   }, [locale]);
 
   return (
@@ -84,7 +84,7 @@ function OrderHistoryPage() {
                       : `not delivered`}
                   </td>
                   <td>
-                    <Link href={`/orders-strp/${order._id}`} passHref>
+                    <Link href={`/orders/${order._id}`} passHref>
                       <a>Details</a>
                     </Link>
                   </td>

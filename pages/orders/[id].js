@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 // own components
 import UserRoute from '../../components/routes/UserRoute';
 import { useMainContext } from '../../context/Context';
@@ -24,7 +24,7 @@ import { usePayPalScriptReducer } from '@paypal/react-paypal-js';
 // }
 
 function OrderPage() {
-  const { authState } = useMainContext();
+  const { authState, adminState } = useMainContext();
   const { query } = useRouter();
   const orderId = query.id;
 
@@ -37,6 +37,9 @@ function OrderPage() {
 
   //   PAYPAL
   const [{ isPending }, paypalDispatch] = usePayPalScriptReducer();
+
+  // Delivery
+  const [orderIsDelivered, setOrderIsDelivered] = useState(null);
 
   // Set up the parameters of the transaction.
   // It is called when the buyer clicks the button.
@@ -104,6 +107,12 @@ function OrderPage() {
 
         setOrder(data);
         setLoading(false);
+
+        if (order.isDelivered) {
+          setOrderIsDelivered(true);
+        } else {
+          setOrderIsDelivered(false);
+        }
       } catch (err) {
         console.log(err);
       }
@@ -133,7 +142,27 @@ function OrderPage() {
       };
       loadPaypalScript();
     }
-  }, [orderId, successPay]);
+  }, [orderId, orderIsDelivered, successPay]);
+
+  // ORDER DELIVERY
+  // const [loadingDeliver, setLoadingDeliver] = useState(false);
+  const deliverOrderHandler = async () => {
+    try {
+      const { data } = await axios.put(
+        `${process.env.NEXT_PUBLIC_API}/admin/orders/${orderId}/deliver`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${authState.token}`,
+          },
+        }
+      );
+
+      setOrderIsDelivered(true);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   //   MULTI LANGUAGE
   const router = useRouter();
@@ -151,32 +180,50 @@ function OrderPage() {
 
   return (
     <UserRoute>
-      <h1>Order: {orderId}</h1>
-      <br></br>
-      {loading ? (
-        <div>Loading...</div>
-      ) : (
-        order && (
+      {order ? (
+        <Fragment>
           <OrderSummary
+            id={orderId}
             shippingAddress={order.shippingAddress}
-            isDelivered={order.isDelivered}
-            deliveredAt={order.deliveredAt}
-            paymentMethod={order.paymentMethod}
-            isPaid={order.isPaid}
-            paidAt={order.paidAt}
             orderItems={order.orderItems}
             itemsPrice={order.itemsPrice}
             taxPrice={order.taxPrice}
             shippingPrice={order.shippingPrice}
             totalPrice={order.totalPrice}
-            isPending={isPending}
-            // successPay={successPay}
-            loadingPay={loadingPay}
-            createOrder={createOrder}
-            onApprove={onApprove}
-            onError={onError}
+            isPaid={order.isPaid}
+            paidAt={order.paidAt}
           />
-        )
+          <br></br>
+          <h2>
+            {' '}
+            {locale === 'en'
+              ? 'Delivery'
+              : locale === 'it'
+              ? 'Spedizione'
+              : 'Bestuur'}
+          </h2>
+          {order.isDelivered ? (
+            <div>
+              {' '}
+              {locale === 'en'
+                ? `Delivered at ${order.deliveredAt}`
+                : locale === 'it'
+                ? `Spedito il ${order.deliveredAt}`
+                : `Betaalt op ${order.deliveredAt}`}
+            </div>
+          ) : (
+            <div>
+              {' '}
+              {locale === 'en'
+                ? 'Not yet delivered'
+                : locale === 'it'
+                ? 'Spedizione pendente'
+                : 'Versturen pendente'}
+            </div>
+          )}
+        </Fragment>
+      ) : (
+        <div>un cazzo</div>
       )}
     </UserRoute>
   );

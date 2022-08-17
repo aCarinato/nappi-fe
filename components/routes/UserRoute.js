@@ -32,7 +32,6 @@ const UserRoute = ({ children }) => {
       if (data.ok) setOk(true);
     } catch (err) {
       router.push('/login');
-      // console.log('na merdAAAAA');
     }
   };
 

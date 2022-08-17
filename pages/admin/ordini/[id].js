@@ -4,9 +4,10 @@ import { Fragment, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 // own components
-import UserRoute from '../../components/routes/UserRoute';
-import { useMainContext } from '../../context/Context';
-import OrderSummary from '../../components/purchase/OrderSummary';
+import UserRoute from '../../../components/routes/UserRoute';
+import { useMainContext } from '../../../context/Context';
+import OrderSummary from '../../../components/purchase/OrderSummary';
+import AdminRoute from '../../../components/routes/AdminRoute';
 
 function OrdiniPage() {
   const { authState, adminState } = useMainContext();
@@ -65,9 +66,14 @@ function OrdiniPage() {
       // setLoadingDeliver(true);
       const { data } = await axios.put(
         `${process.env.NEXT_PUBLIC_API}/admin/orders/${orderId}/deliver`,
-        {}
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${authState.token}`,
+          },
+        }
       );
-      console.log(data);
+      //   console.log(data);
       // setLoadingDeliver(false);
       setOrderIsDelivered(true);
     } catch (err) {
@@ -78,13 +84,13 @@ function OrdiniPage() {
   //   MULTI LANGUAGE
   const router = useRouter();
   const { locale } = router;
-  useEffect(() => {
-    if (locale === 'en') router.push(`/orders/${orderId}`);
-    if (locale === 'de') router.push(`/bestellen/${orderId}`);
-  }, [locale]);
+  //   useEffect(() => {
+  //     if (locale === 'en') router.push(`/orders/${orderId}`);
+  //     if (locale === 'de') router.push(`/bestellen/${orderId}`);
+  //   }, [locale]);
 
   return (
-    <UserRoute>
+    <AdminRoute>
       {order ? (
         <Fragment>
           <OrderSummary
@@ -118,19 +124,20 @@ function OrdiniPage() {
             </div>
           ) : (
             <div>
-              {' '}
-              {locale === 'en'
-                ? 'Not yet delivered'
-                : locale === 'it'
-                ? 'Spedizione pendente'
-                : 'Versturen pendente'}
+              <button onClick={deliverOrderHandler}>
+                {locale === 'en'
+                  ? 'Notify delivery'
+                  : locale === 'it'
+                  ? 'Notifica spedizione'
+                  : 'Betaalt op'}
+              </button>
             </div>
           )}
         </Fragment>
       ) : (
         <div>un cazzo</div>
       )}
-    </UserRoute>
+    </AdminRoute>
   );
 }
 

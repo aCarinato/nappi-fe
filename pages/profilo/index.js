@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { Fragment, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
+import Link from 'next/link';
 // own components
 import UserRoute from '../../components/routes/UserRoute';
 import SpinningLoader from '../../components/UI/SpinningLoader';
@@ -14,7 +15,7 @@ function ProfiloPage() {
 
   const [user, setUser] = useState({});
   const [loading, setLoading] = useState(true);
-
+  console.log(authState);
   const fetchUser = async () => {
     try {
       setLoading(true);
@@ -61,7 +62,15 @@ function ProfiloPage() {
         <SpinningLoader />
       ) : (
         <UserRoute>
-          <div>Pagina profilo (IT): {user.username}</div>
+          <div>Pagina personale {user.username}</div>
+          <br></br>
+          <Link href={`/profilo/storia-ordini`} passHref>
+            <a>I miei ordini</a>
+          </Link>
+          <br></br>
+          <Link href={`/profilo/modifica-profilo`} passHref>
+            <a>Modifica profilo</a>
+          </Link>
         </UserRoute>
       )}
     </Fragment>

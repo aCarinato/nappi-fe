@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Fragment } from 'react';
 // own components
 import UserRoute from '../../components/routes/UserRoute';
 import { useMainContext } from '../../context/Context';
@@ -8,7 +8,7 @@ import OrderSummary from '../../components/purchase/OrderSummary';
 import { usePayPalScriptReducer } from '@paypal/react-paypal-js';
 
 function BestellenPage() {
-  const { authState } = useMainContext();
+  const { authState, adminState } = useMainContext();
   const { query } = useRouter();
   const orderId = query.id;
 
@@ -21,6 +21,9 @@ function BestellenPage() {
 
   //   PAYPAL
   const [{ isPending }, paypalDispatch] = usePayPalScriptReducer();
+
+  // Delivery
+  const [orderIsDelivered, setOrderIsDelivered] = useState(null);
 
   // Set up the parameters of the transaction.
   // It is called when the buyer clicks the button.
@@ -85,9 +88,16 @@ function BestellenPage() {
             },
           }
         );
+        // console.log(data);
 
         setOrder(data);
         setLoading(false);
+
+        if (order.isDelivered) {
+          setOrderIsDelivered(true);
+        } else {
+          setOrderIsDelivered(false);
+        }
       } catch (err) {
         console.log(err);
       }
@@ -99,25 +109,23 @@ function BestellenPage() {
         setLoadingPay(false);
         setSuccessPay(false);
       }
-    } else {
-      // Load the script and reset options
-      const loadPaypalScript = async () => {
-        // const { data: clientId } = await axios.get(
-        //   `${process.env.NEXT_PUBLIC_API}/keys/paypal`
-        // );
-        const clientId = process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID;
-        paypalDispatch({
-          type: 'resetOptions',
-          value: {
-            'client-id': clientId,
-            currency: 'EUR',
-          },
-        });
-        paypalDispatch({ type: 'setLoadingStatus', value: 'pending' });
-      };
-      loadPaypalScript();
     }
-  }, [orderId, successPay]);
+  }, [orderId, orderIsDelivered, successPay]);
+
+  // ORDER DELIVERY
+  // const [loadingDeliver, setLoadingDeliver] = useState(false);
+  const deliverOrderHandler = async () => {
+    try {
+      const { data } = await axios.put(
+        `${process.env.NEXT_PUBLIC_API}/admin/orders/${orderId}/deliver`,
+        {}
+      );
+
+      setOrderIsDelivered(true);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   // MULTI LANGUAGE
   const router = useRouter();
@@ -127,40 +135,52 @@ function BestellenPage() {
     if (locale === 'it') router.push(`/ordini/${orderId}`);
   }, [locale]);
 
-  //   const [{ loading, error, order }, dispatch] = useReducer(reducer, {
-  //     loading: true,
-  //     order: {},
-  //     error: '',
-  //   });
-
   return (
     <UserRoute>
-      <h1>Bestellen: {orderId}</h1>
-      <br></br>
-      {loading ? (
-        <div>Loading...</div>
-      ) : (
-        order && (
+      {order ? (
+        <Fragment>
           <OrderSummary
+            id={orderId}
             shippingAddress={order.shippingAddress}
-            isDelivered={order.isDelivered}
-            deliveredAt={order.deliveredAt}
-            paymentMethod={order.paymentMethod}
-            isPaid={order.isPaid}
-            paidAt={order.paidAt}
             orderItems={order.orderItems}
             itemsPrice={order.itemsPrice}
             taxPrice={order.taxPrice}
             shippingPrice={order.shippingPrice}
             totalPrice={order.totalPrice}
-            isPending={isPending}
-            // successPay={successPay}
-            loadingPay={loadingPay}
-            createOrder={createOrder}
-            onApprove={onApprove}
-            onError={onError}
+            isPaid={order.isPaid}
+            paidAt={order.paidAt}
           />
-        )
+          <br></br>
+          <h2>
+            {' '}
+            {locale === 'en'
+              ? 'Delivery'
+              : locale === 'it'
+              ? 'Spedizione'
+              : 'Bestuur'}
+          </h2>
+          {order.isDelivered ? (
+            <div>
+              {' '}
+              {locale === 'en'
+                ? `Delivered at ${order.deliveredAt}`
+                : locale === 'it'
+                ? `Spedito il ${order.deliveredAt}`
+                : `Betaalt op ${order.deliveredAt}`}
+            </div>
+          ) : (
+            <div>
+              {' '}
+              {locale === 'en'
+                ? 'Not yet delivered'
+                : locale === 'it'
+                ? 'Spedizione pendente'
+                : 'Versturen pendente'}
+            </div>
+          )}
+        </Fragment>
+      ) : (
+        <div>un cazzo</div>
       )}
     </UserRoute>
   );

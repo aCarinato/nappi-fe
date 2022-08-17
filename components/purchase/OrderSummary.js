@@ -1,175 +1,169 @@
+import React, { Fragment } from 'react';
+// next
 import { useRouter } from 'next/router';
-import { Fragment } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import classes from './OrderSummary.module.css';
-
-import { PayPalButtons, usePayPalScriptReducer } from '@paypal/react-paypal-js';
 
 function OrderSummary(props) {
   const {
+    id,
     shippingAddress,
-    isDelivered,
-    deliveredAt = '',
-    paymentMethod,
-    isPaid,
-    paidAt,
     orderItems,
     itemsPrice,
     taxPrice,
     shippingPrice,
     totalPrice,
-    isPending,
-    loadingPay,
-    createOrder,
-    onApprove,
-    onError,
+    isPaid,
+    paidAt,
   } = props;
+
+  //   console.log(shippingAddress);
 
   const { locale } = useRouter();
 
   return (
     <Fragment>
-      <div>
-        <h2>
-          {locale === 'en'
-            ? 'Shipping Address'
-            : locale === 'it'
-            ? 'Indirizzo di spedizione'
-            : 'Lieferanschrift'}
-        </h2>
+      <h1>
+        {locale === 'en'
+          ? `Order Summary: ${id}`
+          : locale === 'it'
+          ? `Riepilogo ordine: ${id}`
+          : `Lieferanschrift: ${id}`}
+      </h1>
+      <br></br>
+      <h2>
+        {locale === 'en'
+          ? 'Shipping Address'
+          : locale === 'it'
+          ? 'Indirizzo di spedizione'
+          : 'Lieferanschrift'}
+      </h2>
+
+      {shippingAddress && (
         <div>
+          {' '}
           {shippingAddress.fullName}, {shippingAddress.address},{' '}
           {shippingAddress.city}, {shippingAddress.postalCode},{' '}
           {shippingAddress.country}
         </div>
-        {isDelivered ? (
-          <div>Delivered at {deliveredAt}</div>
-        ) : (
-          <div>Not delivered</div>
-        )}
-      </div>
+      )}
       <br></br>
-      <div>
-        <h2>
-          {' '}
-          {locale === 'en'
-            ? 'Payment Method'
-            : locale === 'it'
-            ? 'Metodo di pagamento'
-            : 'Zahlungsmethode'}
-        </h2>
-        <div>{paymentMethod}</div>
-        {isPaid ? <div>Paid at {paidAt}</div> : <div>Not paid</div>}
-      </div>
-      <br></br>
-      <div>
-        <h2>Order Items</h2>
-        <table>
-          <thead>
-            <tr>
-              <th>Item</th>
-              <th className="    p-5 text-right">Quantity</th>
-              <th className="  p-5 text-right">Price</th>
-              <th className="p-5 text-right">Subtotal</th>
-            </tr>
-          </thead>
-          <tbody>
-            {orderItems.map((item) => (
-              <tr key={item._id} className="border-b">
-                <td>
-                  <Link
-                    href={
-                      locale === 'en'
-                        ? `/product/${item.slugEN}`
-                        : locale === 'it'
-                        ? `/prodotto/${item.slugIT}`
-                        : `/produkt/${item.slugDE}`
-                    }
-                  >
-                    <a className="flex items-center">
-                      <Image
-                        src={item.image}
-                        alt={item.name}
-                        width={50}
-                        height={50}
-                      ></Image>
-                      &nbsp;
-                      {item.name}
-                    </a>
-                  </Link>
-                </td>
-                <td className=" p-5 text-right">{item.quantity}</td>
-                <td className="p-5 text-right">${item.price}</td>
-                <td className="p-5 text-right">
-                  ${item.quantity * item.price}
-                </td>
+      {orderItems && (
+        <div>
+          <h2>
+            {' '}
+            {locale === 'en'
+              ? 'Order Items'
+              : locale === 'it'
+              ? 'Articoli'
+              : 'Artikels'}
+          </h2>
+          <table>
+            <thead>
+              <tr>
+                <th>Item</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Subtotal</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+            </thead>
+            <tbody>
+              {orderItems.map((item) => (
+                <tr key={item._id} className="border-b">
+                  <td>
+                    <Link
+                      href={
+                        locale === 'en'
+                          ? `/product/${item.slugEN}`
+                          : locale === 'it'
+                          ? `/prodotto/${item.slugIT}`
+                          : `/produkt/${item.slugDE}`
+                      }
+                    >
+                      <a className="flex items-center">
+                        <Image
+                          src={item.image}
+                          alt={item.name}
+                          width={50}
+                          height={50}
+                        ></Image>
+                        &nbsp;
+                        {item.name}
+                      </a>
+                    </Link>
+                  </td>
+                  <td>{item.quantity}</td>
+                  <td>${item.price}</td>
+                  <td>${item.quantity * item.price}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
       <br></br>
-      <div>
-        <div className="card  p-5">
-          <h2 className="mb-2 text-lg">Order Summary</h2>
+      {itemsPrice && taxPrice && (
+        <>
+          <h2>Order Summary</h2>
           <ul>
             <li>
-              <div className="mb-2 flex justify-between">
+              <div>
                 <div>Items</div>
                 <div>${itemsPrice}</div>
               </div>
             </li>{' '}
             <li>
-              <div className="mb-2 flex justify-between">
+              <div>
                 <div>Tax</div>
                 <div>${taxPrice}</div>
               </div>
             </li>
             <li>
-              <div className="mb-2 flex justify-between">
+              <div>
                 <div>Shipping</div>
                 <div>${shippingPrice}</div>
               </div>
             </li>
             <li>
-              <div className="mb-2 flex justify-between">
+              <div>
                 <div>Total</div>
                 <div>${totalPrice}</div>
               </div>
             </li>
-            {!isPaid && (
-              // <div>ORDINE NON PAGATO!!</div>
-              <li>
-                {isPending ? (
-                  <div>Loading...</div>
-                ) : (
-                  <div>
-                    <PayPalButtons
-                      createOrder={createOrder}
-                      onApprove={onApprove}
-                      onError={onError}
-                    ></PayPalButtons>
-                  </div>
-                )}
-                {loadingPay && <div>Loading...</div>}
-              </li>
-            )}
-            {isPaid && (
-              <div>
-                <h2>
-                  {' '}
-                  {locale === 'en'
-                    ? 'Order is paid'
-                    : locale === 'it'
-                    ? 'Ordine pagato'
-                    : 'Bestellung ist bezahlt'}
-                </h2>
-              </div>
-            )}
           </ul>
+        </>
+      )}
+      <br></br>
+      <h2>
+        {' '}
+        {locale === 'en' ? 'Payment' : locale === 'it' ? 'Pagamento' : 'Betaal'}
+      </h2>
+      {isPaid ? (
+        <div>
+          {' '}
+          {locale === 'en'
+            ? 'Paid at'
+            : locale === 'it'
+            ? 'Pagato il'
+            : 'Betaalt op'}{' '}
+          {paidAt}
         </div>
-      </div>
+      ) : (
+        <div>
+          {locale === 'en'
+            ? 'Not paid'
+            : locale === 'it'
+            ? 'Non pagato'
+            : 'Betaalt op'}
+          {locale === 'en' ? (
+            <Link href={`/orders-strp/${id}`}>Proceed to payment</Link>
+          ) : locale === 'it' ? (
+            <Link href={`/ordini-strp/${id}`}>Procedere col pagamento</Link>
+          ) : (
+            <Link href={`/bestellen-strp/${id}`}>Ga naar betalen</Link>
+          )}
+        </div>
+      )}
     </Fragment>
   );
 }

@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+// next js
+import { useRouter } from 'next/router';
 import {
   CardElement,
   //   Elements,
@@ -19,6 +21,9 @@ function StripeCheckout(props) {
   const [disabled, setDisabled] = useState(true);
   const [error, setError] = useState(null);
   const [clientSecret, setClientSecret] = useState('');
+
+  const router = useRouter();
+  const { locale } = router;
 
   //   const [totalPrice, setTotalPrice] = useState(0);
 
@@ -82,6 +87,10 @@ function StripeCheckout(props) {
       setError(null);
       setProcessing(false);
       setSucceeded(true);
+
+      if (locale === 'en') router.push(`/orders/${orderId}`);
+      if (locale === 'it') router.push(`/ordini/${orderId}`);
+      if (locale === 'de') router.push(`/bestellen/${orderId}`);
     }
   };
 

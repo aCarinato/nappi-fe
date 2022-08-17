@@ -43,9 +43,15 @@ function LoginForm(props) {
         //   setError(res.data.error);
         console.log(res.data.error);
       } else {
-        login(res.data.username, res.data.email, res.data.token);
+        login(
+          res.data.username,
+          res.data.email,
+          res.data.token,
+          res.data.isAdmin
+        );
         // router.push(`/profilo/${res.data.username}`);
         //   router.push(`/profilo`);
+        console.log(authState);
       }
     } catch (err) {
       console.log(err);
