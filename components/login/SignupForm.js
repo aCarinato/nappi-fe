@@ -56,7 +56,7 @@ function SignupForm(props) {
         setError(res.data.error);
       }
 
-      // console.log(res);
+      console.log(res);
 
       if (res.data.success) {
         setShowForm(false);
