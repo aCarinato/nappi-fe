@@ -44,7 +44,7 @@ export function ContextProvider({ children }) {
     //  saves the credentials in local storage and in the state
     // localStorage.setItem('token', token);
 
-    console.log(username, email, token, isAdmin);
+    // console.log(username, email, token, isAdmin);
 
     localStorage.setItem(
       'nappi-user-auth',
